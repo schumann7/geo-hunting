@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:geo_hunting/screens/game_enter_page.dart';
 import 'package:geo_hunting/screens/game_create_page.dart';
 
+import 'package:geo_hunting/main.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -19,7 +21,7 @@ class HomePage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 28,
                   color: Colors.black,
-                  fontWeight: FontWeight.w800
+                  fontWeight: FontWeight.w800,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -35,7 +37,7 @@ class HomePage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 24,
                   color: Colors.black,
-                  fontWeight: FontWeight.w500
+                  fontWeight: FontWeight.w500,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -44,18 +46,18 @@ class HomePage extends StatelessWidget {
                 width: 320,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF185C3C),
+                    backgroundColor: green,
                     padding: const EdgeInsets.symmetric(vertical: 18),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                    onPressed: () {
+                  onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const GameCreatePage()),
+                      MaterialPageRoute(builder: (context) => GameCreatePage()),
                     );
-                    },
+                  },
                   child: const Text(
                     'Criar Sala',
                     style: TextStyle(fontSize: 24, color: Color(0xFF9FA6A1)),
@@ -67,18 +69,20 @@ class HomePage extends StatelessWidget {
                 width: 320,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF185C3C),
+                    backgroundColor: green,
                     padding: const EdgeInsets.symmetric(vertical: 18),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                    onPressed: () {
+                  onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const GameEnterPage()),
+                      MaterialPageRoute(
+                        builder: (context) => const GameEnterPage(),
+                      ),
                     );
-                    },
+                  },
                   child: const Text(
                     'Buscar Sala',
                     style: TextStyle(fontSize: 24, color: Color(0xFF9FA6A1)),

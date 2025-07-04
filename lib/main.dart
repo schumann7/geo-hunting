@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'screens/home_page.dart';
 
+Color background = Color(0xFF9FA6A1);
+Color green = Color(0xFF185C3C);
+Color white = Color(0xFFD9D9D9);
+
 void main() {
   runApp(const MyApp());
 }
@@ -13,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Geo Hunting',
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFF9FA6A1),
+        scaffoldBackgroundColor: background,
         textTheme: const TextTheme(
           bodyLarge: TextStyle(color: Colors.black),
           bodyMedium: TextStyle(color: Colors.black),
