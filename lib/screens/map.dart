@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geodesy/geodesy.dart' as geo;
@@ -10,6 +9,8 @@ LatLng posicao = LatLng(-27.2, -52.08);
 final geodesy = geo.Geodesy();
 
 class Mapa extends StatelessWidget {
+  const Mapa({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +30,7 @@ class MapSampleState extends State<MapSample> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
-  Set<Marker> _markers = {};
+  final Set<Marker> _markers = {};
 
   @override
 void initState() {
