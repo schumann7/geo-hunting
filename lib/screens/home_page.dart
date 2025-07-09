@@ -60,7 +60,7 @@ class HomePage extends StatelessWidget {
                   },
                   child: const Text(
                     'Criar Sala',
-                    style: TextStyle(fontSize: 24, color: Color(0xFF9FA6A1)),
+                    style: TextStyle(fontSize: 24, color: Colors.white),
                   ),
                 ),
               ),
@@ -85,7 +85,7 @@ class HomePage extends StatelessWidget {
                   },
                   child: const Text(
                     'Buscar Sala',
-                    style: TextStyle(fontSize: 24, color: Color(0xFF9FA6A1)),
+                    style: TextStyle(fontSize: 24, color: Colors.white),
                   ),
                 ),
               ),

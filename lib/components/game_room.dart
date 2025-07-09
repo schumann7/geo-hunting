@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:geo_hunting/main.dart';
-import 'package:geo_hunting/screens/map.dart';
 import 'package:geo_hunting/screens/teste.dart';
 
 class Room extends StatelessWidget {

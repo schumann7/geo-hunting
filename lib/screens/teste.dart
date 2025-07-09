@@ -39,12 +39,12 @@ class _TesteMapPageState extends State<TesteMapPage> {
     setState(() {
       _center = latlng;
     });
+    print(_center); //Colocar pra salvar depois aqui
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: Stack(
         children: [
           FlutterMap(
