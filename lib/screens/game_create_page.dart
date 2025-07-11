@@ -121,7 +121,7 @@ class _GameCreatePageState extends State<GameCreatePage> {
                   ),
                 )
                 : Text(""),
-            SizedBox(child: TesteMapPage(), width: 100, height: 270,),
+            SizedBox(width: 100, height: 270, child: TesteMapPage(),),
             SizedBox(height: 20,),
             ElevatedButton(
                   style: ElevatedButton.styleFrom(
