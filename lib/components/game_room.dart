@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geo_hunting/main.dart';
-import 'package:geo_hunting/screens/teste.dart';
+
+import 'package:geo_hunting/components/popup_password.dart'; // Adicione este import
 
 class Room extends StatelessWidget {
   final String roomName;
@@ -9,6 +10,27 @@ class Room extends StatelessWidget {
   const Room({super.key, required this.roomName, required this.roomId});
 
   final bool quente = false;
+
+  void _showPasswordPopup(BuildContext context) {
+    final TextEditingController _passwordController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return PasswordPopup(
+          controller: _passwordController,
+          onClose: () {
+            Navigator.of(context).pop();
+          },
+          onEnter: () {
+            // Aqui você pode tratar a senha futuramente
+            Navigator.of(context).pop();
+            // Se quiser navegar para a sala após a senha, mova o Navigator.push para cá
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,29 +50,7 @@ class Room extends StatelessWidget {
           ),
           trailing: IconButton(
             onPressed: () {
-              Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Scaffold(
-                  extendBodyBehindAppBar: true,
-                  appBar: AppBar(
-                    leading: SizedBox(),
-                    actions: [
-                      Container(decoration: BoxDecoration(color: green, borderRadius: BorderRadius.all(Radius.circular(10))),child: IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.exit_to_app), color: Colors.white, iconSize: 35,),)
-                    ],
-                    title: Container(width: 200, height: 60, decoration: BoxDecoration(color: background), child: Row(
-                      children: [
-                        SizedBox(width: 50,),
-                        Text("Sinal: ", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,),),
-                        Text(quente? "Quente": "Frio", style: TextStyle(color: quente? Colors.red : Colors.blue, fontSize: 20, fontWeight: FontWeight.bold,),)
-                      ],
-                    ),),
-                    backgroundColor: Color.fromRGBO(0, 0, 0, 0),
-                  ),
-                  body: TesteMapPage(),
-                ),
-              ),
-              );
+              _showPasswordPopup(context);
             },
             icon: Icon(Icons.arrow_forward),
           ),
