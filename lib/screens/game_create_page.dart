@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:geo_hunting/main.dart';
 import 'package:geo_hunting/screens/teste.dart';
+import 'package:latlong2/latlong.dart';
 
 class GameCreatePage extends StatefulWidget {
   const GameCreatePage({super.key});
@@ -17,6 +18,8 @@ class _GameCreatePageState extends State<GameCreatePage> {
   final TextEditingController _controllerRoomPassword = TextEditingController();
 
   bool _isPrivate = false;
+  LatLng coordenates = LatLng(-27.202456, -52.083215);
+  bool create = true;
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +124,21 @@ class _GameCreatePageState extends State<GameCreatePage> {
                   ),
                 )
                 : Text(""),
-            SizedBox(width: 100, height: 270, child: TesteMapPage(),),
+            SizedBox(width: 100, height: 270, child: Scaffold(
+              body: TesteMapPage(
+                onMapTap: (LatLng latLng) {
+                 setState(() {
+                   coordenates = latLng;
+                 });
+                },
+                create: true,
+              ),
+              extendBodyBehindAppBar: true,
+              appBar: AppBar(title: Text("${(coordenates.latitude * 100000).round()/100000}, ${(coordenates.longitude * 100000).round() / 100000}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                  leading: SizedBox(width: 0,),
+                  backgroundColor: Colors.transparent,
+                  ),
+            )),
             SizedBox(height: 20,),
             ElevatedButton(
                   style: ElevatedButton.styleFrom(

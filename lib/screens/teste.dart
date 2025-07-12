@@ -4,7 +4,10 @@ import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
 
 class TesteMapPage extends StatefulWidget {
-  const TesteMapPage({super.key});
+  final void Function(LatLng)? onMapTap;
+  final bool? create;
+
+  const TesteMapPage({super.key, this.onMapTap, this.create});
 
   @override
   State<TesteMapPage> createState() => _TesteMapPageState();
@@ -36,10 +39,14 @@ class _TesteMapPageState extends State<TesteMapPage> {
   }
 
   void _onMapTap(TapPosition tapPosition, LatLng latlng) {
-    setState(() {
-      _center = latlng;
-    });
-    print(_center); //Colocar pra salvar depois aqui
+    if (widget.create!){
+      setState(() {
+        _center = latlng;
+      });
+      if (widget.onMapTap != null) {
+        widget.onMapTap!(_center);
+      }
+    }
   }
 
   @override

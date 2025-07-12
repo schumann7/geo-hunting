@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geo_hunting/main.dart';
+import '../screens/teste.dart';
 
 class PasswordPopup extends StatelessWidget {
   final VoidCallback onClose;
@@ -44,7 +45,12 @@ class PasswordPopup extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TesteMapPage()),
+            );
+                  },
                   child: Text("Entrar", style: TextStyle(fontSize: 15, color: Colors.white)),
             ),
       ],

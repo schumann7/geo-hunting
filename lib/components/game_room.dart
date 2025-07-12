@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geo_hunting/main.dart';
 
-import 'package:geo_hunting/components/popup_password.dart'; // Adicione este import
+import 'package:geo_hunting/components/popup_password.dart';
+import 'package:geo_hunting/screens/teste.dart'; // Adicione este import
 
 class Room extends StatelessWidget {
   final String roomName;
@@ -24,7 +25,10 @@ class Room extends StatelessWidget {
           },
           onEnter: () {
             // Aqui você pode tratar a senha futuramente
-            Navigator.of(context).pop();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TesteMapPage()),
+            );
             // Se quiser navegar para a sala após a senha, mova o Navigator.push para cá
           },
         );
