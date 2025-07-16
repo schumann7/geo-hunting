@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
+import 'dart:io';
+import '../components/compass.dart';
 
 class TesteMapPage extends StatefulWidget {
   final void Function(LatLng)? onMapTap;
@@ -49,6 +51,36 @@ class _TesteMapPageState extends State<TesteMapPage> {
     }
   }
 
+  void _inGame() {
+    _goToCurrentLocation();
+    LatLng initialPosition = _center;
+    LatLng treasure = LatLng(0, 0); //Configurar pra pegar as coordenadas certo
+    LatLng userPosition = initialPosition;
+    List<LatLng> path = [];
+
+    Future<void> currentPosition() async {
+      Position position = await Geolocator.getCurrentPosition();
+      setState(() {
+        userPosition = LatLng(position.latitude, position.longitude);
+        path.add(userPosition);
+      });
+    }
+    currentPosition();
+
+    double distance = Geolocator.distanceBetween(initialPosition.latitude, initialPosition.longitude, treasure.latitude, treasure.longitude);
+
+    while(Geolocator.distanceBetween(userPosition.latitude, userPosition.longitude, treasure.latitude, treasure.longitude) > 0.01){
+      //Método meramente ilustrativo pra testar a função
+    
+      currentPosition();
+      print(Geolocator.distanceBetween(userPosition.latitude, userPosition.longitude, treasure.latitude, treasure.longitude) > distance*0.5 ? "Frio" : (Geolocator.distanceBetween(userPosition.latitude, userPosition.longitude, treasure.latitude, treasure.longitude) < distance*0.1 ? "Quente" : "Morno"));
+      treasure = LatLng((treasure.latitude+userPosition.latitude*0.1), (treasure.longitude+userPosition.longitude*0.1));
+      sleep(Duration(seconds:3));
+    }
+
+    print("Você ganhou, parabéns!");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,9 +114,14 @@ class _TesteMapPageState extends State<TesteMapPage> {
             right: 16,
             bottom: 32,
             child: FloatingActionButton(
-              onPressed: _goToCurrentLocation,
+              onPressed: _inGame,
               child: const Icon(Icons.my_location),
             ),
+          ),
+          Positioned(
+            left: 16,
+            bottom: 32,
+            child: CompassWidget(size: 80),
           ),
         ],
       ),
