@@ -34,7 +34,9 @@ class PasswordPopup extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
                   child: Text("Sair", style: TextStyle(fontSize: 15, color: Colors.white)),
             ),
         ElevatedButton(
@@ -47,9 +49,9 @@ class PasswordPopup extends StatelessWidget {
                   ),
                   onPressed: (){
                     Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => TesteMapPage()),
-            );
+                      context,
+                      MaterialPageRoute(builder: (context) => TesteMapPage()),
+                    );
                   },
                   child: Text("Entrar", style: TextStyle(fontSize: 15, color: Colors.white)),
             ),

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geo_hunting/main.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
-import 'dart:io';
 import '../components/compass.dart';
 
 class TesteMapPage extends StatefulWidget {
   final void Function(LatLng)? onMapTap;
   final bool? create;
+  final String? temperature;
 
-  const TesteMapPage({super.key, this.onMapTap, this.create});
+  const TesteMapPage({super.key, this.onMapTap, this.create, this.temperature});
 
   @override
   State<TesteMapPage> createState() => _TesteMapPageState();
@@ -18,6 +19,7 @@ class TesteMapPage extends StatefulWidget {
 class _TesteMapPageState extends State<TesteMapPage> {
   final MapController _mapController = MapController();
   LatLng _center = LatLng(-27.202456, -52.083215);
+  String temperature = "Iniciar";
 
   Future<void> _goToCurrentLocation() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -51,12 +53,15 @@ class _TesteMapPageState extends State<TesteMapPage> {
     }
   }
 
-  void _inGame() {
-    _goToCurrentLocation();
+  void _inGame() async {
+    await _goToCurrentLocation();
+    _mapController.move(_center, 16.0);
+
     LatLng initialPosition = _center;
-    LatLng treasure = LatLng(0, 0); //Configurar pra pegar as coordenadas certo
+    LatLng treasure = LatLng(-27.20246,-52.08322); //Configurar pra pegar as coordenadas certo
     LatLng userPosition = initialPosition;
-    List<LatLng> path = [];
+    List<LatLng> path = [initialPosition];
+    double walkDistance = 0;
 
     Future<void> currentPosition() async {
       Position position = await Geolocator.getCurrentPosition();
@@ -65,25 +70,48 @@ class _TesteMapPageState extends State<TesteMapPage> {
         path.add(userPosition);
       });
     }
-    currentPosition();
+    await currentPosition();
 
     double distance = Geolocator.distanceBetween(initialPosition.latitude, initialPosition.longitude, treasure.latitude, treasure.longitude);
 
+    setState(() {
+      temperature = "Frio";
+    });
+
     while(Geolocator.distanceBetween(userPosition.latitude, userPosition.longitude, treasure.latitude, treasure.longitude) > 0.01){
-      //Método meramente ilustrativo pra testar a função
-    
-      currentPosition();
-      print(Geolocator.distanceBetween(userPosition.latitude, userPosition.longitude, treasure.latitude, treasure.longitude) > distance*0.5 ? "Frio" : (Geolocator.distanceBetween(userPosition.latitude, userPosition.longitude, treasure.latitude, treasure.longitude) < distance*0.1 ? "Quente" : "Morno"));
-      treasure = LatLng((treasure.latitude+userPosition.latitude*0.1), (treasure.longitude+userPosition.longitude*0.1));
-      sleep(Duration(seconds:3));
+      await currentPosition();
+      await _goToCurrentLocation();
+
+      setState(() {
+        temperature = Geolocator.distanceBetween(userPosition.latitude, userPosition.longitude, treasure.latitude, treasure.longitude) > distance*0.5 ? "Frio" : (Geolocator.distanceBetween(userPosition.latitude, userPosition.longitude, treasure.latitude, treasure.longitude) < distance*0.1 ? "Quente" : "Morno");
+      });
+
+      await Future.delayed(const Duration(seconds: 10));
     }
 
-    print("Você ganhou, parabéns!");
+    for(int i = 1; i < path.length; i++){
+      walkDistance += Geolocator.distanceBetween(path[i-1].latitude, path[i-1].longitude, path[i].latitude, path[i].longitude);
+    }
+    setState(() {
+    temperature = "Você caminhou $walkDistance metros";
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: widget.create != true? AppBar(
+        title: Text(temperature, style: TextStyle(fontWeight: FontWeight.bold,
+        color: temperature == "Quente" ? Colors.red : (temperature == "Morno"? Colors.orange : Colors.blue),
+        ),),
+        backgroundColor: background,
+        centerTitle: false,
+        leading: SizedBox(),
+        actions: [
+          IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.exit_to_app))
+        ],
+      ) : null,
+      extendBodyBehindAppBar: true,
       body: Stack(
         children: [
           FlutterMap(
@@ -110,19 +138,27 @@ class _TesteMapPageState extends State<TesteMapPage> {
               ),
             ],
           ),
-          Positioned(
+          widget.create == true? Positioned(
             right: 16,
             bottom: 32,
             child: FloatingActionButton(
-              onPressed: _inGame,
-              child: const Icon(Icons.my_location),
+              onPressed: _goToCurrentLocation,
+              backgroundColor: white,
+              child: Icon(Icons.my_location, color: green,),
             ),
-          ),
-          Positioned(
+          ) : Positioned(
+              right: 16,
+              bottom: 32,
+              child: FloatingActionButton(
+              onPressed: _inGame,
+              backgroundColor: white,
+              child: Text(temperature),
+          )),
+          widget.create != true? Positioned(
             left: 16,
             bottom: 32,
             child: CompassWidget(size: 80),
-          ),
+          ): SizedBox(),
         ],
       ),
     );
