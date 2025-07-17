@@ -20,6 +20,7 @@ class _TesteMapPageState extends State<TesteMapPage> {
   final MapController _mapController = MapController();
   LatLng _center = LatLng(-27.202456, -52.083215);
   String temperature = "Iniciar";
+  double currentDistance = 0;
 
   Future<void> _goToCurrentLocation() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -58,7 +59,7 @@ class _TesteMapPageState extends State<TesteMapPage> {
     _mapController.move(_center, 16.0);
 
     LatLng initialPosition = _center;
-    LatLng treasure = LatLng(-27.20246,-52.08322); //Configurar pra pegar as coordenadas certo
+    LatLng treasure = LatLng(-27.2052625, -52.0840469); //Configurar pra pegar as coordenadas certo
     LatLng userPosition = initialPosition;
     List<LatLng> path = [initialPosition];
     double walkDistance = 0;
@@ -78,34 +79,43 @@ class _TesteMapPageState extends State<TesteMapPage> {
       temperature = "Frio";
     });
 
-    while(Geolocator.distanceBetween(userPosition.latitude, userPosition.longitude, treasure.latitude, treasure.longitude) > 0.01){
+    while(Geolocator.distanceBetween(userPosition.latitude, userPosition.longitude, treasure.latitude, treasure.longitude) > 5){
       await currentPosition();
       await _goToCurrentLocation();
 
       setState(() {
-        temperature = Geolocator.distanceBetween(userPosition.latitude, userPosition.longitude, treasure.latitude, treasure.longitude) > distance*0.5 ? "Frio" : (Geolocator.distanceBetween(userPosition.latitude, userPosition.longitude, treasure.latitude, treasure.longitude) < distance*0.1 ? "Quente" : "Morno");
+        currentDistance = Geolocator.distanceBetween(userPosition.latitude, userPosition.longitude, treasure.latitude, treasure.longitude);
+        temperature = currentDistance > distance*0.5 ? "Frio" : (currentDistance < distance*0.1 ? "Quente" : "Morno");
       });
 
-      await Future.delayed(const Duration(seconds: 10));
+      await Future.delayed(const Duration(seconds: 3));
     }
 
     for(int i = 1; i < path.length; i++){
       walkDistance += Geolocator.distanceBetween(path[i-1].latitude, path[i-1].longitude, path[i].latitude, path[i].longitude);
+      walkDistance = (walkDistance*100).round()/100;
     }
     setState(() {
-    temperature = "Você caminhou $walkDistance metros";
+    temperature = "Você andou $walkDistance metros";
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // _goToCurrentLocation();
+    // _mapController.move(_center, 16.0);
     return Scaffold(
       appBar: widget.create != true? AppBar(
-        title: Text(temperature, style: TextStyle(fontWeight: FontWeight.bold,
-        color: temperature == "Quente" ? Colors.red : (temperature == "Morno"? Colors.orange : Colors.blue),
-        ),),
+        title: Column(
+          children: [
+            Text(temperature, style: TextStyle(fontWeight: FontWeight.bold,
+            color: temperature == "Quente" ? Colors.red : (temperature == "Morno"? Colors.orange : Colors.blue),
+            ),),
+            Text("Você está a ${(currentDistance*100).round()/100} metros", style: TextStyle(fontSize: 15),),
+          ],
+        ),
         backgroundColor: background,
-        centerTitle: false,
+        centerTitle: true,
         leading: SizedBox(),
         actions: [
           IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.exit_to_app))
