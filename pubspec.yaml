@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_map_cancellable_tile_provider: ^3.1.1
   flutter_compass: ^0.8.1
+  http: 
 
 dev_dependencies:
   flutter_test:
