@@ -6,7 +6,7 @@ import 'package:geo_hunting/screens/teste.dart'; // Adicione este import
 
 class Room extends StatelessWidget {
   final String roomName;
-  final int roomId;
+  final String roomId;
 
   const Room({super.key, required this.roomName, required this.roomId});
 
