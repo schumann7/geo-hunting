@@ -57,9 +57,6 @@ class _TesteMapPageState extends State<TesteMapPage> {
   }
 
   void _inGame() async {
-    await _goToCurrentLocation();
-    _mapController.move(_center, 16.0);
-
     LatLng initialPosition = _center;
     LatLng treasure = LatLng(-27.2052625, -52.0840469); //Configurar pra pegar as coordenadas certo
     LatLng userPosition = initialPosition;
@@ -89,7 +86,19 @@ class _TesteMapPageState extends State<TesteMapPage> {
 
       setState(() {
         currentDistance = Geolocator.distanceBetween(userPosition.latitude, userPosition.longitude, treasure.latitude, treasure.longitude);
-        temperature = currentDistance > distance*0.5 ? "Frio" : (currentDistance < distance*0.1 ? "Quente" : "Morno");
+        if(currentDistance > distance*0.75){
+          temperature = "Frio";
+        } else if (currentDistance > distance*0.5){
+        temperature = "Gélido";
+        } else if (currentDistance > distance*0.35){
+          temperature = "Fresco";
+        } else if (currentDistance > distance*0.2){
+          temperature = "Morno";
+        } else if (currentDistance > distance*0.1){
+          temperature = "Quente";
+        } else {
+          temperature = "Fervendo";
+        }
       });
 
       await Future.delayed(const Duration(seconds: 3));
@@ -116,7 +125,7 @@ class _TesteMapPageState extends State<TesteMapPage> {
         title: Column(
           children: [
             Text(temperature, style: TextStyle(fontWeight: FontWeight.bold,
-            color: temperature == "Quente" ? Colors.red : (temperature == "Morno"? Colors.orange : Colors.blue),
+            color: temperature == "Quente" || temperature == "Fervendo" ? Colors.red : (temperature == "Morno" || temperature == "Fresco" ? Colors.orange : (temperature == "Gélido" || temperature == "Frio" ? Colors.blue : green)),
             ),),
             Text(currentDistance != 0? "Você está a ${(currentDistance*100).round()/100} metros" : "Tesouro encontrado em ${(((stopwatch.elapsedMilliseconds/1000).round()/60).floor()).toString().padLeft(2, '0')}:${((stopwatch.elapsedMilliseconds/1000).round()%60).toString().padLeft(2, '0')} minutos", style: TextStyle(fontSize: 15),),
           ],
