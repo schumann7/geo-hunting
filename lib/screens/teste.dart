@@ -4,6 +4,7 @@ import 'package:geo_hunting/main.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
 import '../components/compass.dart';
+import 'dart:core';
 
 class TesteMapPage extends StatefulWidget {
   final void Function(LatLng)? onMapTap;
@@ -19,8 +20,9 @@ class TesteMapPage extends StatefulWidget {
 class _TesteMapPageState extends State<TesteMapPage> {
   final MapController _mapController = MapController();
   LatLng _center = LatLng(-27.202456, -52.083215);
-  String temperature = "Iniciar";
+  String temperature = "Aguarde...";
   double currentDistance = 0;
+  Stopwatch stopwatch = Stopwatch();
 
   Future<void> _goToCurrentLocation() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -79,6 +81,8 @@ class _TesteMapPageState extends State<TesteMapPage> {
       temperature = "Frio";
     });
 
+    stopwatch.start();
+
     while(Geolocator.distanceBetween(userPosition.latitude, userPosition.longitude, treasure.latitude, treasure.longitude) > 5){
       await currentPosition();
       await _goToCurrentLocation();
@@ -91,12 +95,15 @@ class _TesteMapPageState extends State<TesteMapPage> {
       await Future.delayed(const Duration(seconds: 3));
     }
 
+    stopwatch.stop();
+
     for(int i = 1; i < path.length; i++){
       walkDistance += Geolocator.distanceBetween(path[i-1].latitude, path[i-1].longitude, path[i].latitude, path[i].longitude);
       walkDistance = (walkDistance*100).round()/100;
     }
     setState(() {
     temperature = "Você andou $walkDistance metros";
+    currentDistance = 0;
     });
   }
 
@@ -111,7 +118,7 @@ class _TesteMapPageState extends State<TesteMapPage> {
             Text(temperature, style: TextStyle(fontWeight: FontWeight.bold,
             color: temperature == "Quente" ? Colors.red : (temperature == "Morno"? Colors.orange : Colors.blue),
             ),),
-            Text("Você está a ${(currentDistance*100).round()/100} metros", style: TextStyle(fontSize: 15),),
+            Text(currentDistance != 0? "Você está a ${(currentDistance*100).round()/100} metros" : "Tesouro encontrado em ${(((stopwatch.elapsedMilliseconds/1000).round()/60).floor()).toString().padLeft(2, '0')}:${((stopwatch.elapsedMilliseconds/1000).round()%60).toString().padLeft(2, '0')} minutos", style: TextStyle(fontSize: 15),),
           ],
         ),
         backgroundColor: background,
@@ -130,6 +137,7 @@ class _TesteMapPageState extends State<TesteMapPage> {
               center: _center,
               zoom: 13.0,
               onTap: _onMapTap,
+              onMapReady: _inGame,
             ),
             children: [
               TileLayer(
@@ -156,14 +164,7 @@ class _TesteMapPageState extends State<TesteMapPage> {
               backgroundColor: white,
               child: Icon(Icons.my_location, color: green,),
             ),
-          ) : Positioned(
-              right: 16,
-              bottom: 32,
-              child: FloatingActionButton(
-              onPressed: _inGame,
-              backgroundColor: white,
-              child: Text(temperature),
-          )),
+          ) : SizedBox(),
           widget.create != true? Positioned(
             left: 16,
             bottom: 32,
