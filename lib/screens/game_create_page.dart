@@ -1,11 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:geo_hunting/main.dart';
-import 'package:geo_hunting/screens/teste.dart';
+import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
-
-import '../logic/create_rooms.dart';
+import '../main.dart'; // ajuste conforme seu projeto
+import '../screens/teste.dart'; // seu mapa
+// Se green e background estão no main.dart, mantenha este import
 
 class GameCreatePage extends StatefulWidget {
   const GameCreatePage({super.key});
@@ -16,16 +15,69 @@ class GameCreatePage extends StatefulWidget {
 
 class _GameCreatePageState extends State<GameCreatePage> {
   final TextEditingController _controllerRoomName = TextEditingController();
-
   final TextEditingController _controllerRoomPassword = TextEditingController();
 
   bool _isPrivate = false;
   LatLng coordenates = LatLng(-27.202456, -52.083215);
-  bool create = true;
+
+  Future<void> createRoom() async {
+    final url = Uri.parse(
+      'http://ec2-54-233-31-163.sa-east-1.compute.amazonaws.com:5000/create_room',
+    );
+
+    // Monta o mapa sem o campo senha inicialmente
+    final Map<String, dynamic> dados = {
+      "nomedasala": _controllerRoomName.text.trim(),
+      "latitude": coordenates.latitude.toString(),
+      "longitude": coordenates.longitude.toString(),
+      "privada": _isPrivate,
+    };
+
+    // Só adiciona o campo senha se for privada
+    if (_isPrivate) {
+      dados["senha"] = _controllerRoomPassword.text;
+    }
+
+    print("Enviando dados: $dados");
+
+    try {
+      final resposta = await http.post(
+        url,
+        headers: {"Content-Type": "application/json", "Accept": "application/json"},
+        body: jsonEncode(dados),
+      );
+
+      if (resposta.statusCode == 200 || resposta.statusCode == 201) {
+        print("Sala criada com sucesso!");
+        print("Resposta: ${resposta.body}");
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Sala criada com sucesso!")),
+        );
+
+        _controllerRoomName.clear();
+        _controllerRoomPassword.clear();
+        setState(() {
+          _isPrivate = false;
+        });
+
+      } else {
+        print("Erro ao criar sala: ${resposta.statusCode}");
+        print("Mensagem: ${resposta.body}");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Erro ao criar sala: ${resposta.body}")),
+        );
+      }
+    } catch (e) {
+      print("Erro de conexão: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Erro de conexão com o servidor.")),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    createRoom();
     return Scaffold(
       appBar: AppBar(backgroundColor: background),
       body: Center(
@@ -61,9 +113,7 @@ class _GameCreatePageState extends State<GameCreatePage> {
                 ),
               ),
             ),
-
             SizedBox(height: 20.0),
-
             Row(
               children: [
                 Text(
@@ -91,41 +141,41 @@ class _GameCreatePageState extends State<GameCreatePage> {
             ),
             _isPrivate
                 ? TextSelectionTheme(
-                  data: TextSelectionThemeData(
-                    selectionColor: green.withOpacity(0.2),
-                    cursorColor: Colors.black,
-                    selectionHandleColor: green,
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 20.0),
-                      TextField(
-                        obscureText: true,
-                        controller: _controllerRoomPassword,
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
+                    data: TextSelectionThemeData(
+                      selectionColor: green.withOpacity(0.2),
+                      cursorColor: Colors.black,
+                      selectionHandleColor: green,
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 20.0),
+                        TextField(
+                          obscureText: true,
+                          controller: _controllerRoomPassword,
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            floatingLabelStyle: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            label: Text("Senha da Sala"),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                            focusColor: green,
+                            hoverColor: green,
                           ),
-                          floatingLabelStyle: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          label: Text("Senha da Sala"),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                          ),
-                          focusColor: green,
-                          hoverColor: green,
                         ),
-                      ),
-                      SizedBox(height: 20),
-                    ],
-                  ),
-                )
+                        SizedBox(height: 20),
+                      ],
+                    ),
+                  )
                 : Text(""),
             SizedBox(
               width: 100,
@@ -159,7 +209,9 @@ class _GameCreatePageState extends State<GameCreatePage> {
                   borderRadius: BorderRadius.circular(15),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                createRoom();
+              },
               child: Text(
                 "Criar sala",
                 style: TextStyle(fontSize: 24, color: Colors.white),
