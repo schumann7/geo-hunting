@@ -8,10 +8,11 @@ import 'dart:core';
 
 class TesteMapPage extends StatefulWidget {
   final void Function(LatLng)? onMapTap;
+  final void Function()? getLocation;
   final bool? create;
   final String? temperature;
 
-  const TesteMapPage({super.key, this.onMapTap, this.create, this.temperature});
+  const TesteMapPage({super.key, this.onMapTap, this.create, this.temperature, this.getLocation});
 
   @override
   State<TesteMapPage> createState() => _TesteMapPageState();
@@ -43,6 +44,10 @@ class _TesteMapPageState extends State<TesteMapPage> {
       _center = LatLng(position.latitude, position.longitude);
     });
     _mapController.move(_center, 16.0);
+
+    if (widget.getLocation != null) {
+        widget.getLocation!();
+    }
   }
 
   void _onMapTap(TapPosition tapPosition, LatLng latlng) {
@@ -57,6 +62,8 @@ class _TesteMapPageState extends State<TesteMapPage> {
   }
 
   void _inGame() async {
+    await _goToCurrentLocation();
+
     LatLng initialPosition = _center;
     LatLng treasure = LatLng(-27.2052625, -52.0840469); //Configurar pra pegar as coordenadas certo
     LatLng userPosition = initialPosition;
@@ -101,7 +108,7 @@ class _TesteMapPageState extends State<TesteMapPage> {
         }
       });
 
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 50));
     }
 
     stopwatch.stop();
@@ -118,8 +125,6 @@ class _TesteMapPageState extends State<TesteMapPage> {
 
   @override
   Widget build(BuildContext context) {
-    // _goToCurrentLocation();
-    // _mapController.move(_center, 16.0);
     return Scaffold(
       appBar: widget.create != true? AppBar(
         title: Column(
@@ -146,7 +151,7 @@ class _TesteMapPageState extends State<TesteMapPage> {
               center: _center,
               zoom: 13.0,
               onTap: _onMapTap,
-              onMapReady: _inGame,
+              onMapReady: widget.create == true? (){_goToCurrentLocation();} :_inGame,
             ),
             children: [
               TileLayer(

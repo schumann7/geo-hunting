@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
+import 'package:geolocator/geolocator.dart';
 import '../main.dart'; // ajuste conforme seu projeto
 import '../screens/teste.dart'; // seu mapa
 // Se green e background estão no main.dart, mantenha este import
@@ -182,6 +183,11 @@ class _GameCreatePageState extends State<GameCreatePage> {
               height: 270,
               child: Scaffold(
                 body: TesteMapPage(
+                  getLocation: () async {
+                    Position position = await Geolocator.getCurrentPosition();
+                    setState(() {
+                      coordenates = LatLng(position.latitude, position.longitude);
+                    });},
                   onMapTap: (LatLng latLng) {
                     setState(() {
                       coordenates = latLng;
