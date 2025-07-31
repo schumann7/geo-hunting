@@ -44,7 +44,10 @@ class _GameCreatePageState extends State<GameCreatePage> {
     try {
       final resposta = await http.post(
         url,
-        headers: {"Content-Type": "application/json", "Accept": "application/json"},
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
         body: jsonEncode(dados),
       );
 
@@ -52,16 +55,15 @@ class _GameCreatePageState extends State<GameCreatePage> {
         print("Sala criada com sucesso!");
         print("Resposta: ${resposta.body}");
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Sala criada com sucesso!")),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Sala criada com sucesso!")));
 
         _controllerRoomName.clear();
         _controllerRoomPassword.clear();
         setState(() {
           _isPrivate = false;
         });
-
       } else {
         print("Erro ao criar sala: ${resposta.statusCode}");
         print("Mensagem: ${resposta.body}");
@@ -142,41 +144,41 @@ class _GameCreatePageState extends State<GameCreatePage> {
             ),
             _isPrivate
                 ? TextSelectionTheme(
-                    data: TextSelectionThemeData(
-                      selectionColor: green.withOpacity(0.2),
-                      cursorColor: Colors.black,
-                      selectionHandleColor: green,
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 20.0),
-                        TextField(
-                          obscureText: true,
-                          controller: _controllerRoomPassword,
-                          decoration: InputDecoration(
-                            labelStyle: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            floatingLabelStyle: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            label: Text("Senha da Sala"),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
-                            ),
-                            focusColor: green,
-                            hoverColor: green,
+                  data: TextSelectionThemeData(
+                    selectionColor: green.withOpacity(0.2),
+                    cursorColor: Colors.black,
+                    selectionHandleColor: green,
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 20.0),
+                      TextField(
+                        obscureText: true,
+                        controller: _controllerRoomPassword,
+                        decoration: InputDecoration(
+                          labelStyle: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
                           ),
+                          floatingLabelStyle: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          label: Text("Senha da Sala"),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                          focusColor: green,
+                          hoverColor: green,
                         ),
-                        SizedBox(height: 20),
-                      ],
-                    ),
-                  )
+                      ),
+                      SizedBox(height: 20),
+                    ],
+                  ),
+                )
                 : Text(""),
             SizedBox(
               width: 100,
@@ -186,8 +188,12 @@ class _GameCreatePageState extends State<GameCreatePage> {
                   getLocation: () async {
                     Position position = await Geolocator.getCurrentPosition();
                     setState(() {
-                      coordenates = LatLng(position.latitude, position.longitude);
-                    });},
+                      coordenates = LatLng(
+                        position.latitude,
+                        position.longitude,
+                      );
+                    });
+                  },
                   onMapTap: (LatLng latLng) {
                     setState(() {
                       coordenates = latLng;
