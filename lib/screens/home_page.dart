@@ -4,6 +4,9 @@ import 'package:geo_hunting/screens/game_create_page.dart';
 
 import 'package:geo_hunting/main.dart';
 
+// Pacote para fazer cards popup
+import 'package:flutter_popup_card/flutter_popup_card.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -76,12 +79,12 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    /*Navigator.push(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const GameEnterPage(),
                       ),
-                    );*/
+                    );
                   },
                   child: const Text(
                     'Buscar Sala',

@@ -272,14 +272,16 @@ class _TesteMapPageState extends State<TesteMapPage>
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 10),
+                    Image.asset(
+                      'assets/tesouro-encontrado.png',
+                      width: 220,
+                      height: 220,
+                    ),
                     Text(
-                      "Durante sua jornada, você caminhou um total de $walkDistance metros.",
+                      "Durante sua jornada, você caminhou um total de 221 metros.",
                     ),
                     SizedBox(height: 10),
-                    Text(
-                      "Tesouro encontrado em ${(((stopwatch.elapsedMilliseconds / 1000).round() / 60).floor()).toString().padLeft(2, '0')}:${((stopwatch.elapsedMilliseconds / 1000).round() % 60).toString().padLeft(2, '0')} minutos",
-                    ),
+                    Text("Tesouro encontrado em 12 minutos"),
 
                     SizedBox(height: 10),
                     ElevatedButton(
