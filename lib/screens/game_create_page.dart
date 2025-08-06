@@ -23,7 +23,7 @@ class _GameCreatePageState extends State<GameCreatePage> {
 
   Future<void> createRoom() async {
     final url = Uri.parse(
-      'http://ec2-54-233-31-163.sa-east-1.compute.amazonaws.com:5000/create_room',
+      'http://ec2-15-228-201-167.sa-east-1.compute.amazonaws.com:5000//create_room',
     );
 
     // Monta o mapa sem o campo senha inicialmente
@@ -203,6 +203,7 @@ class _GameCreatePageState extends State<GameCreatePage> {
                 ),
                 extendBodyBehindAppBar: true,
                 appBar: AppBar(
+                  centerTitle: true,
                   title: Text(
                     "${(coordenates.latitude * 100000).round() / 100000}, ${(coordenates.longitude * 100000).round() / 100000}",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -222,7 +223,21 @@ class _GameCreatePageState extends State<GameCreatePage> {
                 ),
               ),
               onPressed: () {
-                createRoom();
+                if (_controllerRoomName.text != "") {
+                  if (_isPrivate == true &&
+                      _controllerRoomPassword.text == "") {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Insira uma senha válida.")),
+                    );
+                  } else {
+                    createRoom();
+                    Navigator.pop(context);
+                  }
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("A sala deve ter um nome.")),
+                  );
+                }
               },
               child: Text(
                 "Criar sala",

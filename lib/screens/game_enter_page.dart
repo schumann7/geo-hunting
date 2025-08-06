@@ -35,6 +35,8 @@ class GameEnterPage extends StatelessWidget {
                       return Room(
                         roomName: rooms[index]['nomedasala'],
                         roomId: rooms[index]['id'],
+                        roomLat: rooms[index]['latitude'],
+                        roomLon: rooms[index]['longitude'],
                       );
                     },
                   );

@@ -5,7 +5,7 @@ import 'dart:convert';
 Future<List> findRooms() async {
   final response = await http.Client().get(
     Uri.parse(
-      'http://ec2-54-233-31-163.sa-east-1.compute.amazonaws.com:5000/find_rooms',
+      'http://ec2-15-228-201-167.sa-east-1.compute.amazonaws.com:5000/find_rooms',
     ),
   );
   debugPrint(response.toString());

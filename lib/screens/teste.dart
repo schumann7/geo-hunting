@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geo_hunting/main.dart';
+import 'package:geo_hunting/screens/game_enter_page.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
 import '../components/compass.dart';
 import 'dart:core';
+
+import '../components/game_room.dart';
 
 // Pacote para fazer cards popup
 import 'package:flutter_popup_card/flutter_popup_card.dart';
@@ -17,8 +20,12 @@ class TesteMapPage extends StatefulWidget {
   final void Function()? getLocation;
   final bool? create;
   final String? temperature;
+  final double? roomLat;
+  final double? roomLon;
 
-  const TesteMapPage({
+  TesteMapPage({
+    this.roomLat,
+    this.roomLon,
     super.key,
     this.onMapTap,
     this.create,
@@ -91,6 +98,8 @@ class _TesteMapPageState extends State<TesteMapPage>
   void _inGame() async {
     await _goToCurrentLocation();
 
+    print("Widget Room Lat: " + widget.roomLat.toString());
+
     showPopupCard(
       context: context,
       builder: (context) {
@@ -120,10 +129,7 @@ class _TesteMapPageState extends State<TesteMapPage>
                   StatefulBuilder(
                     builder: (context, setState) {
                       return GestureDetector(
-                        onTap: () {
-                          _controllerGif.reset();
-                          _controllerGif.forward();
-                        },
+                        onTap: () {},
                         child: Gif(
                           image: AssetImage("assets/gifcalibrar.gif"),
                           controller: _controllerGif,
@@ -144,7 +150,7 @@ class _TesteMapPageState extends State<TesteMapPage>
                       style: TextStyle(color: green, fontSize: 20),
                     ),
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.pop(context);
                     },
                   ),
                 ],
@@ -157,8 +163,8 @@ class _TesteMapPageState extends State<TesteMapPage>
 
     LatLng initialPosition = _center;
     LatLng treasure = LatLng(
-      -27.2052625,
-      -52.0840469,
+      widget.roomLat!,
+      widget.roomLon!,
     ); //Configurar pra pegar as coordenadas certo
     LatLng userPosition = initialPosition;
     List<LatLng> path = [initialPosition];

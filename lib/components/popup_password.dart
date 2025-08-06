@@ -6,9 +6,13 @@ class PasswordPopup extends StatelessWidget {
   final VoidCallback onClose;
   final VoidCallback onEnter;
   final TextEditingController controller;
+  final double? roomLat;
+  final double? roomLon;
 
   const PasswordPopup({
     Key? key,
+    this.roomLat,
+    this.roomLon,
     required this.onClose,
     required this.onEnter,
     required this.controller,
@@ -21,40 +25,49 @@ class PasswordPopup extends StatelessWidget {
       content: TextField(
         controller: controller,
         obscureText: true,
-        decoration: const InputDecoration(
-          labelText: 'Senha',
-        ),
+        decoration: const InputDecoration(labelText: 'Senha'),
       ),
       actions: [
         ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: green,
-                    padding: const EdgeInsets.symmetric(vertical: 18),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  onPressed: (){
-                    Navigator.pop(context);
-                  },
-                  child: Text("Sair", style: TextStyle(fontSize: 15, color: Colors.white)),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: green,
+            padding: const EdgeInsets.symmetric(vertical: 18),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
             ),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text(
+            "Sair",
+            style: TextStyle(fontSize: 15, color: Colors.white),
+          ),
+        ),
         ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: green,
-                    padding: const EdgeInsets.symmetric(vertical: 18),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  onPressed: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => TesteMapPage()),
-                    );
-                  },
-                  child: Text("Entrar", style: TextStyle(fontSize: 15, color: Colors.white)),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: green,
+            padding: const EdgeInsets.symmetric(vertical: 18),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
             ),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder:
+                    (context) =>
+                        TesteMapPage(roomLat: roomLat, roomLon: roomLon),
+              ),
+            );
+          },
+          child: Text(
+            "Entrar",
+            style: TextStyle(fontSize: 15, color: Colors.white),
+          ),
+        ),
       ],
     );
   }
