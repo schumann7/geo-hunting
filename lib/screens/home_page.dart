@@ -76,12 +76,12 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.push(
+                    /*Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const GameEnterPage(),
                       ),
-                    );
+                    );*/
                   },
                   child: const Text(
                     'Buscar Sala',

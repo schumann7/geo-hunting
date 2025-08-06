@@ -100,66 +100,71 @@ class _TesteMapPageState extends State<TesteMapPage>
 
     print("Widget Room Lat: " + widget.roomLat.toString());
 
-    showPopupCard(
-      context: context,
-      builder: (context) {
-        return PopupCard(
-          elevation: 10,
-          color: background,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(20),
+    if (currentDistance != 0) {
+      showPopupCard(
+        context: context,
+        builder: (context) {
+          return PopupCard(
+            elevation: 10,
+            color: background,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(20),
 
-            child: SizedBox(
-              width: 220,
-              height: 426,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "Calibre o dispositivo para jogar!",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    "Para calibrar a bússola do seu celular, você precisará realizar movimentos circulares com o aparelho.",
-                  ),
-                  StatefulBuilder(
-                    builder: (context, setState) {
-                      return GestureDetector(
-                        onTap: () {},
-                        child: Gif(
-                          image: AssetImage("assets/gifcalibrar.gif"),
-                          controller: _controllerGif,
-                          autostart: Autostart.loop,
-                          placeholder: (context) => const Text('Loading...'),
-                          onFetchCompleted: () {
-                            _controllerGif.reset();
-                            _controllerGif.forward();
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                  SizedBox(height: 10),
-                  ElevatedButton(
-                    child: Text(
-                      "Fechar",
-                      style: TextStyle(color: green, fontSize: 20),
+              child: SizedBox(
+                width: 220,
+                height: 426,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Calibre o dispositivo para jogar!",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
+                    SizedBox(height: 20),
+                    Text(
+                      "Para calibrar a bússola do seu celular, você precisará realizar movimentos circulares com o aparelho.",
+                    ),
+                    StatefulBuilder(
+                      builder: (context, setState) {
+                        return GestureDetector(
+                          onTap: () {},
+                          child: Gif(
+                            image: AssetImage("assets/gifcalibrar.gif"),
+                            controller: _controllerGif,
+                            autostart: Autostart.loop,
+                            placeholder: (context) => const Text('Loading...'),
+                            onFetchCompleted: () {
+                              _controllerGif.reset();
+                              _controllerGif.forward();
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    ElevatedButton(
+                      child: Text(
+                        "Fechar",
+                        style: TextStyle(color: green, fontSize: 20),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
-    );
+          );
+        },
+      );
+    }
 
     LatLng initialPosition = _center;
     LatLng treasure = LatLng(
@@ -242,6 +247,57 @@ class _TesteMapPageState extends State<TesteMapPage>
     setState(() {
       temperature = "Você andou $walkDistance metros";
       currentDistance = 0;
+      showPopupCard(
+        context: context,
+        builder: (context) {
+          return PopupCard(
+            elevation: 10,
+            color: background,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(20),
+
+              child: SizedBox(
+                width: 220,
+                height: 426,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Parabéns! Você encontrou o tesouro.",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      "Durante sua jornada, você caminhou um total de $walkDistance metros.",
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      "Tesouro encontrado em ${(((stopwatch.elapsedMilliseconds / 1000).round() / 60).floor()).toString().padLeft(2, '0')}:${((stopwatch.elapsedMilliseconds / 1000).round() % 60).toString().padLeft(2, '0')} minutos",
+                    ),
+
+                    SizedBox(height: 10),
+                    ElevatedButton(
+                      child: Text(
+                        "Fechar",
+                        style: TextStyle(color: green, fontSize: 20),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
     });
   }
 
