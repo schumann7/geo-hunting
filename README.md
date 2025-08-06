@@ -1,16 +1,4 @@
-# geo_hunting
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Geo Hunting
+GeoHunting é um APP inovador que busca trazer a tecnologia aliada à diversão de brincadeiras de caça ao tesouro! Neste APP, você deve ir atrás de um tesouro cadastrado previamente por um amigo, podendo ser jogado sozinho ou em grupos. Esse é o aplicativo ideal para um dia com os amigos.
+# Como rodar?
+Para rodar Geo Hunting em seu computador você deve ter o Flutter na versão correta e instalar todas as bibliotecas necessárias para o seu funcionamento. Após isso, acesse o arquivo _main.dart_ na pasta _lib_ e selecione um dispositivo móvel que tenha acesso ao _GPS_, depois disso você será redireconado à página principal onde terá a opção de criar ou se juntar a uma sala. Para criar uma sala você deve informar o nome dela, decidir a localização do tesouro e se quer ou não incluir uma senha. Depois de ter uma nova sala criada, convide outros usuários para entrar na sessão e procurar o prêmio.
