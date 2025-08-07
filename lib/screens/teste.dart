@@ -6,8 +6,8 @@ import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
 import '../components/compass.dart';
 import 'dart:core';
-
 import '../components/game_room.dart';
+import 'package:keep_screen_on/keep_screen_on.dart';
 
 // Pacote para fazer cards popup
 import 'package:flutter_popup_card/flutter_popup_card.dart';
@@ -44,7 +44,7 @@ class _TesteMapPageState extends State<TesteMapPage>
   final MapController _mapController = MapController();
   LatLng _center = LatLng(-27.202456, -52.083215);
   String temperature = "Aguarde...";
-  double currentDistance = 0;
+  double currentDistance = -1;
   Stopwatch stopwatch = Stopwatch();
 
   @override
@@ -96,6 +96,7 @@ class _TesteMapPageState extends State<TesteMapPage>
   }
 
   void _inGame() async {
+    KeepScreenOn.turnOn();
     await _goToCurrentLocation();
 
     print("Widget Room Lat: " + widget.roomLat.toString());
@@ -154,6 +155,7 @@ class _TesteMapPageState extends State<TesteMapPage>
                         style: TextStyle(color: green, fontSize: 20),
                       ),
                       onPressed: () {
+                        currentDistance = 0;
                         Navigator.pop(context);
                       },
                     ),
@@ -245,7 +247,7 @@ class _TesteMapPageState extends State<TesteMapPage>
       walkDistance = (walkDistance * 100).round() / 100;
     }
     setState(() {
-      temperature = "Você andou $walkDistance metros";
+      temperature = "Parabéns!";
       currentDistance = 0;
       showPopupCard(
         context: context,
@@ -261,7 +263,7 @@ class _TesteMapPageState extends State<TesteMapPage>
 
               child: SizedBox(
                 width: 220,
-                height: 426,
+                height: 450,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -278,10 +280,11 @@ class _TesteMapPageState extends State<TesteMapPage>
                       height: 220,
                     ),
                     Text(
-                      "Durante sua jornada, você caminhou um total de 221 metros.",
+                      textAlign: TextAlign.center,
+                      "Durante o percurso, você caminhou $walkDistance metros",
                     ),
                     SizedBox(height: 10),
-                    Text("Tesouro encontrado em 12 minutos"),
+                    Text(textAlign: TextAlign.center, "Tesouro encontrado em ${(((stopwatch.elapsedMilliseconds / 1000).round() / 60).floor()).toString().padLeft(2, '0')}:${((stopwatch.elapsedMilliseconds / 1000).round() % 60).toString().padLeft(2, '0')} minutos",),
 
                     SizedBox(height: 10),
                     ElevatedButton(
@@ -290,7 +293,16 @@ class _TesteMapPageState extends State<TesteMapPage>
                         style: TextStyle(color: green, fontSize: 20),
                       ),
                       onPressed: () {
+                        KeepScreenOn.turnOff();
                         Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                            (context) =>
+                              GameEnterPage(),
+                          ),
+                        );
                       },
                     ),
                   ],
@@ -328,9 +340,9 @@ class _TesteMapPageState extends State<TesteMapPage>
                       ),
                     ),
                     Text(
-                      currentDistance != 0
+                      currentDistance > 0
                           ? "Você está a ${(currentDistance * 100).round() / 100} metros"
-                          : "Tesouro encontrado em ${(((stopwatch.elapsedMilliseconds / 1000).round() / 60).floor()).toString().padLeft(2, '0')}:${((stopwatch.elapsedMilliseconds / 1000).round() % 60).toString().padLeft(2, '0')} minutos",
+                          : "",
                       style: TextStyle(fontSize: 15),
                     ),
                   ],
@@ -341,6 +353,7 @@ class _TesteMapPageState extends State<TesteMapPage>
                 actions: [
                   IconButton(
                     onPressed: () {
+                      KeepScreenOn.turnOff();
                       Navigator.pop(context);
                     },
                     icon: Icon(Icons.exit_to_app),

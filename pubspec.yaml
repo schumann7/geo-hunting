@@ -39,6 +39,7 @@ dependencies:
   http: 
   flutter_popup_card:
   gif: 
+  keep_screen_on: ^4.0.0
 
 dev_dependencies:
   flutter_test:
