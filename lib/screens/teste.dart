@@ -297,12 +297,13 @@ class _TesteMapPageState extends State<TesteMapPage>
                       onPressed: () {
                         KeepScreenOn.turnOff();
                         Navigator.pop(context);
-                        Navigator.push(
+                        Navigator.pop(context);
+                        /*Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => GameEnterPage(),
                           ),
-                        );
+                        );*/
                       },
                     ),
                   ],
@@ -403,7 +404,7 @@ class _TesteMapPageState extends State<TesteMapPage>
                 right: 16,
                 bottom: 32,
                 child: FloatingActionButton(
-                  onPressed: () => _goToCurrentLocation(false),
+                  onPressed: () => _goToCurrentLocation(true),
                   backgroundColor: white,
                   child: Icon(Icons.my_location, color: green),
                 ),
