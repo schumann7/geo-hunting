@@ -23,7 +23,7 @@ class _GameCreatePageState extends State<GameCreatePage> {
 
   Future<void> createRoom() async {
     final url = Uri.parse(
-      'http://ec2-15-228-201-167.sa-east-1.compute.amazonaws.com:5000//create_room',
+      'http://ec2-15-228-201-167.sa-east-1.compute.amazonaws.com/create_room',
     );
 
     // Monta o mapa sem o campo senha inicialmente
