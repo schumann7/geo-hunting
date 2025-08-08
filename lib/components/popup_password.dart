@@ -8,6 +8,7 @@ class PasswordPopup extends StatelessWidget {
   final TextEditingController controller;
   final double? roomLat;
   final double? roomLon;
+  final String? senha;
 
   const PasswordPopup({
     Key? key,
@@ -16,6 +17,7 @@ class PasswordPopup extends StatelessWidget {
     required this.onClose,
     required this.onEnter,
     required this.controller,
+    this.senha,
   }) : super(key: key);
 
   @override
@@ -53,15 +55,17 @@ class PasswordPopup extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            Navigator.pop(context);
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder:
-                    (context) =>
-                        TesteMapPage(roomLat: roomLat, roomLon: roomLon),
-              ),
-            );
+            if (controller.text.trim() == senha!.toString().trim()) {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder:
+                      (context) =>
+                          TesteMapPage(roomLat: roomLat, roomLon: roomLon),
+                ),
+              );
+            }
           },
           child: Text(
             "Entrar",

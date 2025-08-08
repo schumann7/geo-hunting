@@ -28,7 +28,16 @@ class GameEnterPage extends StatelessWidget {
                 case ConnectionState.none:
                   debugPrint("Conexão não estabelecida");
                 case ConnectionState.done:
-                  List<dynamic> rooms = snapshot.data ?? [{"id": "DEMO", "nomedasala": "Sala de Demonstração", "latitude": "-27.202456", "longitude": "-52.083215"}];
+                  List<dynamic> rooms =
+                      snapshot.data ??
+                      [
+                        {
+                          "id": "DEMO",
+                          "nomedasala": "Sala de Demonstração",
+                          "latitude": "-27.202456",
+                          "longitude": "-52.083215",
+                        },
+                      ];
                   return ListView.builder(
                     itemCount: rooms.length,
                     itemBuilder: (context, index) {
@@ -37,6 +46,8 @@ class GameEnterPage extends StatelessWidget {
                         roomId: rooms[index]['id'],
                         roomLat: rooms[index]['latitude'],
                         roomLon: rooms[index]['longitude'],
+                        privada: rooms[index]['privada'],
+                        senha: rooms[index]['senha'],
                       );
                     },
                   );

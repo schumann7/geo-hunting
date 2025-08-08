@@ -11,6 +11,8 @@ class Room extends StatelessWidget {
   final String roomId;
   final String roomLat;
   final String roomLon;
+  final bool privada;
+  final String? senha;
 
   const Room({
     super.key,
@@ -18,6 +20,8 @@ class Room extends StatelessWidget {
     required this.roomId,
     required this.roomLat,
     required this.roomLon,
+    required this.privada,
+    this.senha,
   });
 
   final bool quente = false;
@@ -32,6 +36,7 @@ class Room extends StatelessWidget {
         return PasswordPopup(
           roomLat: double.parse(roomLat),
           roomLon: double.parse(roomLon),
+          senha: senha,
           controller: _passwordController,
           onClose: () {
             Navigator.of(context).pop();
@@ -64,7 +69,8 @@ class Room extends StatelessWidget {
       child: ListTileTheme(
         iconColor: green,
         child: ListTile(
-          leading: Text(
+          subtitle: Text(privada ? "Sala Privada" : "Sala Pública"),
+          title: Text(
             roomName,
             style: TextStyle(
               color: Colors.black,
@@ -74,7 +80,18 @@ class Room extends StatelessWidget {
           ),
           trailing: IconButton(
             onPressed: () {
-              _showPasswordPopup(context);
+              privada
+                  ? _showPasswordPopup(context)
+                  : Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => TesteMapPage(
+                            roomLat: double.parse(roomLat),
+                            roomLon: double.parse(roomLon),
+                          ),
+                    ),
+                  );
             },
             icon: Icon(Icons.arrow_forward),
           ),

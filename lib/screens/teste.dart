@@ -216,11 +216,11 @@ class _TesteMapPageState extends State<TesteMapPage>
           treasure.longitude,
         );
         if (currentDistance > distance * 0.75) {
-          temperature = "Frio";
+          temperature = "Congelando";
         } else if (currentDistance > distance * 0.5) {
-          temperature = "Gélido";
+          temperature = "Frio";
         } else if (currentDistance > distance * 0.35) {
-          temperature = "Fresco";
+          temperature = "Neutro";
         } else if (currentDistance > distance * 0.2) {
           temperature = "Morno";
         } else if (currentDistance > distance * 0.1) {
@@ -282,7 +282,10 @@ class _TesteMapPageState extends State<TesteMapPage>
                       "Durante o percurso, você caminhou $walkDistance metros",
                     ),
                     SizedBox(height: 10),
-                    Text(textAlign: TextAlign.center, "Tesouro encontrado em ${(((stopwatch.elapsedMilliseconds / 1000).round() / 60).floor()).toString().padLeft(2, '0')}:${((stopwatch.elapsedMilliseconds / 1000).round() % 60).toString().padLeft(2, '0')} minutos",),
+                    Text(
+                      textAlign: TextAlign.center,
+                      "Tesouro encontrado em ${(((stopwatch.elapsedMilliseconds / 1000).round() / 60).floor()).toString().padLeft(2, '0')}:${((stopwatch.elapsedMilliseconds / 1000).round() % 60).toString().padLeft(2, '0')} minutos",
+                    ),
 
                     SizedBox(height: 10),
                     ElevatedButton(
@@ -296,9 +299,7 @@ class _TesteMapPageState extends State<TesteMapPage>
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder:
-                            (context) =>
-                              GameEnterPage(),
+                            builder: (context) => GameEnterPage(),
                           ),
                         );
                       },
@@ -329,10 +330,10 @@ class _TesteMapPageState extends State<TesteMapPage>
                             temperature == "Quente" || temperature == "Fervendo"
                                 ? Colors.red
                                 : (temperature == "Morno" ||
-                                        temperature == "Fresco"
+                                        temperature == "Neutro"
                                     ? Colors.orange
-                                    : (temperature == "Gélido" ||
-                                            temperature == "Frio"
+                                    : (temperature == "Frio" ||
+                                            temperature == "Congelando"
                                         ? Colors.blue
                                         : green)),
                       ),
