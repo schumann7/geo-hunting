@@ -155,7 +155,6 @@ class _TesteMapPageState extends State<TesteMapPage>
                         style: TextStyle(color: green, fontSize: 20),
                       ),
                       onPressed: () {
-                        currentDistance = 0;
                         Navigator.pop(context);
                       },
                     ),
@@ -167,7 +166,6 @@ class _TesteMapPageState extends State<TesteMapPage>
         },
       );
     }
-
     LatLng initialPosition = _center;
     LatLng treasure = LatLng(
       widget.roomLat!,
