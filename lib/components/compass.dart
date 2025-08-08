@@ -62,6 +62,12 @@ class CompassWidget extends StatelessWidget {
                         // You need to get the user's location using a location package
                         double userLat = userLatitude;
                         double userLng = userLongitude;
+                        /*print(
+                          "Bússola Usuário: " +
+                              userLat.toString() +
+                              ", " +
+                              userLng.toString(),
+                        );   */
 
                         double toRadians(double degree) =>
                             degree * (math.pi / 180);

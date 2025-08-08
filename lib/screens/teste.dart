@@ -231,6 +231,7 @@ class _TesteMapPageState extends State<TesteMapPage>
         } else {
           temperature = "Fervendo";
         }
+        //print("Usuário: " + _center.toString());
       });
 
       await Future.delayed(const Duration(milliseconds: 50));
