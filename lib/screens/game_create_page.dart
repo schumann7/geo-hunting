@@ -54,7 +54,7 @@ class _GameCreatePageState extends State<GameCreatePage> {
       if (resposta.statusCode == 200 || resposta.statusCode == 201) {
         print("Sala criada com sucesso!");
         print("Resposta: ${resposta.body}");
-
+        ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text("Sala criada com sucesso!")));
@@ -67,12 +67,14 @@ class _GameCreatePageState extends State<GameCreatePage> {
       } else {
         print("Erro ao criar sala: ${resposta.statusCode}");
         print("Mensagem: ${resposta.body}");
+        ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Erro ao criar sala: ${resposta.body}")),
         );
       }
     } catch (e) {
       print("Erro de conexão: $e");
+      ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Erro de conexão com o servidor.")),
       );
@@ -226,6 +228,7 @@ class _GameCreatePageState extends State<GameCreatePage> {
                 if (_controllerRoomName.text != "") {
                   if (_isPrivate == true &&
                       _controllerRoomPassword.text == "") {
+                    ScaffoldMessenger.of(context).clearSnackBars();
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text("Insira uma senha válida.")),
                     );
@@ -234,6 +237,7 @@ class _GameCreatePageState extends State<GameCreatePage> {
                     Navigator.pop(context);
                   }
                 } else {
+                  ScaffoldMessenger.of(context).clearSnackBars();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text("A sala deve ter um nome.")),
                   );

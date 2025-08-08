@@ -103,7 +103,7 @@ class CompassWidget extends StatelessWidget {
 
                   // Botei uns espaços antes do texto pq não parecia centralizado (pq tem a bolinha do grau)
                   child: Text(
-                    '   ${direction.toStringAsFixed(0)}°',
+                    ' ${direction.toStringAsFixed(0)}°',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

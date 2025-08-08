@@ -329,15 +329,24 @@ class _TesteMapPageState extends State<TesteMapPage>
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color:
-                            temperature == "Quente" || temperature == "Fervendo"
+                            temperature == "Fervendo"
                                 ? Colors.red
-                                : (temperature == "Morno" ||
-                                        temperature == "Neutro"
-                                    ? Colors.orange
-                                    : (temperature == "Frio" ||
-                                            temperature == "Congelando"
-                                        ? Colors.blue
-                                        : green)),
+                                : (temperature == "Quente"
+                                    ? Colors.deepOrange
+                                    : (temperature == "Morno"
+                                        ? Colors.orange
+                                        : (temperature == "Neutro"
+                                            ? Colors.yellow
+                                            : (temperature == "Frio"
+                                                ? Colors.lightBlue
+                                                : (temperature == "Congelando"
+                                                    ? const Color.fromARGB(
+                                                      255,
+                                                      51,
+                                                      64,
+                                                      205,
+                                                    )
+                                                    : green))))),
                       ),
                     ),
                     Text(
