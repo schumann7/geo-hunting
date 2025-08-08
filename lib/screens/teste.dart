@@ -59,7 +59,7 @@ class _TesteMapPageState extends State<TesteMapPage>
     super.dispose();
   }
 
-  Future<void> _goToCurrentLocation() async {
+  Future<void> _goToCurrentLocation(bool entrou) async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       await Geolocator.openLocationSettings();
@@ -77,9 +77,10 @@ class _TesteMapPageState extends State<TesteMapPage>
     setState(() {
       _center = LatLng(position.latitude, position.longitude);
     });
-    //_mapController.move(_center, 16.0);
-
-    //Comentei pra ficar fluido ^^^^
+    if (widget.create == true || entrou == true) {
+      _mapController.move(_center, 16.0);
+    }
+    //If para somente mover a camera para centralizar na criação de sala
 
     if (widget.getLocation != null) {
       widget.getLocation!();
@@ -99,7 +100,7 @@ class _TesteMapPageState extends State<TesteMapPage>
 
   void _inGame() async {
     KeepScreenOn.turnOn();
-    await _goToCurrentLocation();
+    await _goToCurrentLocation(true);
 
     if (currentDistance != 0) {
       showPopupCard(
@@ -206,7 +207,7 @@ class _TesteMapPageState extends State<TesteMapPage>
         ) >
         5) {
       await currentPosition();
-      await _goToCurrentLocation();
+      await _goToCurrentLocation(false);
 
       setState(() {
         currentDistance = Geolocator.distanceBetween(
@@ -372,7 +373,7 @@ class _TesteMapPageState extends State<TesteMapPage>
               onMapReady:
                   widget.create == true
                       ? () {
-                        _goToCurrentLocation();
+                        _goToCurrentLocation(false);
                       }
                       : _inGame,
             ),
@@ -402,7 +403,7 @@ class _TesteMapPageState extends State<TesteMapPage>
                 right: 16,
                 bottom: 32,
                 child: FloatingActionButton(
-                  onPressed: _goToCurrentLocation,
+                  onPressed: () => _goToCurrentLocation(false),
                   backgroundColor: white,
                   child: Icon(Icons.my_location, color: green),
                 ),
@@ -421,21 +422,23 @@ class _TesteMapPageState extends State<TesteMapPage>
               : SizedBox(),
 
           //Abaixo daqui o Rômulo fez
-          Positioned(
-            right: 32,
-            bottom: 32,
-            child: FloatingActionButton(
-              onPressed: () async {
-                Position position = await Geolocator.getCurrentPosition();
-                setState(() {
-                  _center = LatLng(position.latitude, position.longitude);
-                });
-                _mapController.move(_center, 16.0);
-              },
-              backgroundColor: white,
-              child: Icon(Icons.my_location, color: green),
-            ),
-          ),
+          widget.create != true
+              ? Positioned(
+                right: 32,
+                bottom: 32,
+                child: FloatingActionButton(
+                  onPressed: () async {
+                    Position position = await Geolocator.getCurrentPosition();
+                    setState(() {
+                      _center = LatLng(position.latitude, position.longitude);
+                    });
+                    _mapController.move(_center, 16.0);
+                  },
+                  backgroundColor: white,
+                  child: Icon(Icons.my_location, color: green),
+                ),
+              )
+              : SizedBox(),
 
           //Acima daqui o Rômulo n fez
         ],
