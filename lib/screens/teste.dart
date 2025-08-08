@@ -77,7 +77,9 @@ class _TesteMapPageState extends State<TesteMapPage>
     setState(() {
       _center = LatLng(position.latitude, position.longitude);
     });
-    _mapController.move(_center, 16.0);
+    //_mapController.move(_center, 16.0);
+
+    //Comentei pra ficar fluido ^^^^
 
     if (widget.getLocation != null) {
       widget.getLocation!();
@@ -98,8 +100,6 @@ class _TesteMapPageState extends State<TesteMapPage>
   void _inGame() async {
     KeepScreenOn.turnOn();
     await _goToCurrentLocation();
-
-    print("Widget Room Lat: " + widget.roomLat.toString());
 
     if (currentDistance != 0) {
       showPopupCard(
@@ -409,8 +409,35 @@ class _TesteMapPageState extends State<TesteMapPage>
               )
               : SizedBox(),
           widget.create != true
-              ? Positioned(left: 16, bottom: 32, child: CompassWidget(size: 80))
+              ? Positioned(
+                left: 16,
+                bottom: 32,
+                child: CompassWidget(
+                  treasureLat: widget.roomLat!,
+                  treasureLon: widget.roomLon!,
+                  size: 80,
+                ),
+              )
               : SizedBox(),
+
+          //Abaixo daqui o Rômulo fez
+          Positioned(
+            right: 32,
+            bottom: 32,
+            child: FloatingActionButton(
+              onPressed: () async {
+                Position position = await Geolocator.getCurrentPosition();
+                setState(() {
+                  _center = LatLng(position.latitude, position.longitude);
+                });
+                _mapController.move(_center, 16.0);
+              },
+              backgroundColor: white,
+              child: Icon(Icons.my_location, color: green),
+            ),
+          ),
+
+          //Acima daqui o Rômulo n fez
         ],
       ),
     );
