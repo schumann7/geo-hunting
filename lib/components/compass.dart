@@ -6,12 +6,16 @@ class CompassWidget extends StatelessWidget {
   final double size;
   final double treasureLat;
   final double treasureLon;
+  final double userLatitude;
+  final double userLongitude;
 
   const CompassWidget({
     Key? key,
     this.size = 200,
     required this.treasureLat,
     required this.treasureLon,
+    required this.userLatitude,
+    required this.userLongitude,
   }) : super(key: key);
 
   @override
@@ -51,14 +55,13 @@ class CompassWidget extends StatelessWidget {
                   angle:
                       (() {
                         // Replace these with your target latitude and longitude
-                        double targetLat =
-                            treasureLat; // Example: San Francisco
+                        double targetLat = treasureLat;
                         double targetLng = treasureLon;
 
                         // Replace these with the user's current latitude and longitude
                         // You need to get the user's location using a location package
-                        const double userLat = 0.0;
-                        const double userLng = 0.0;
+                        double userLat = userLatitude;
+                        double userLng = userLongitude;
 
                         double toRadians(double degree) =>
                             degree * (math.pi / 180);

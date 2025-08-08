@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geo_hunting/main.dart';
@@ -426,6 +428,8 @@ class _TesteMapPageState extends State<TesteMapPage>
                 child: CompassWidget(
                   treasureLat: widget.roomLat!,
                   treasureLon: widget.roomLon!,
+                  userLatitude: _center.latitude,
+                  userLongitude: _center.longitude,
                   size: 80,
                 ),
               )
