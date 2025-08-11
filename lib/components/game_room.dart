@@ -78,6 +78,7 @@ class Room extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
+          leading: Text("ID \n ${roomId}", textAlign: TextAlign.center),
           trailing: IconButton(
             onPressed: () {
               privada

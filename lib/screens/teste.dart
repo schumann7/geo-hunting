@@ -234,7 +234,7 @@ class _TesteMapPageState extends State<TesteMapPage>
         //print("Usuário: " + _center.toString());
       });
 
-      await Future.delayed(const Duration(milliseconds: 50));
+      await Future.delayed(const Duration(milliseconds: 25));
     }
 
     stopwatch.stop();
@@ -339,7 +339,7 @@ class _TesteMapPageState extends State<TesteMapPage>
                                     : (temperature == "Morno"
                                         ? Colors.orange
                                         : (temperature == "Neutro"
-                                            ? Colors.yellow
+                                            ? Colors.amber
                                             : (temperature == "Frio"
                                                 ? Colors.lightBlue
                                                 : (temperature == "Congelando"
@@ -401,9 +401,11 @@ class _TesteMapPageState extends State<TesteMapPage>
                     width: 80,
                     height: 80,
                     point: _center,
-                    child: const Icon(
-                      Icons.location_pin,
-                      color: Colors.red,
+                    child: Icon(
+                      widget.create == true
+                          ? Icons.location_pin
+                          : Icons.person_pin_circle,
+                      color: widget.create == true ? Colors.red : green,
                       size: 40,
                     ),
                   ),
@@ -414,17 +416,24 @@ class _TesteMapPageState extends State<TesteMapPage>
           widget.create == true
               ? Positioned(
                 right: 16,
-                bottom: 32,
+                bottom: 16,
                 child: FloatingActionButton(
                   onPressed: () => _goToCurrentLocation(true),
-                  backgroundColor: white,
-                  child: Icon(Icons.my_location, color: green),
+
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  focusColor: Colors.transparent,
+                  focusElevation: 0,
+                  highlightElevation: 0,
+                  hoverElevation: 0,
+                  shape: CircleBorder(),
+                  child: Icon(Icons.my_location, color: green, size: 35),
                 ),
               )
               : SizedBox(),
           widget.create != true
               ? Positioned(
-                left: 16,
+                left: 20,
                 bottom: 32,
                 child: CompassWidget(
                   treasureLat: widget.roomLat!,
@@ -449,8 +458,15 @@ class _TesteMapPageState extends State<TesteMapPage>
                     });
                     _mapController.move(_center, 16.0);
                   },
-                  backgroundColor: white,
-                  child: Icon(Icons.my_location, color: green),
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  focusColor: Colors.transparent,
+                  focusElevation: 0,
+                  highlightElevation: 0,
+                  hoverElevation: 0,
+                  shape: CircleBorder(),
+
+                  child: Icon(Icons.my_location, color: green, size: 35),
                 ),
               )
               : SizedBox(),

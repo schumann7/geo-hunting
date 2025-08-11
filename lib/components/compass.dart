@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'dart:math' as math;
 
+import 'package:geo_hunting/main.dart';
+
 class CompassWidget extends StatelessWidget {
   final double size;
   final double treasureLat;
@@ -46,7 +48,7 @@ class CompassWidget extends StatelessWidget {
                   height: size,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(color: Colors.grey, width: 4),
+                    border: Border.all(color: green, width: 3),
                   ),
                 ),
                 // Ponteiro
@@ -103,14 +105,13 @@ class CompassWidget extends StatelessWidget {
                   child: Icon(
                     Icons.navigation,
                     size: size * 0.5,
-                    color: Colors.red,
+                    color: const Color.fromARGB(255, 40, 176, 58),
                   ),
                 ),
                 // Texto do grau
                 Positioned(
                   bottom: 2,
 
-                  // Botei uns espaços antes do texto pq não parecia centralizado (pq tem a bolinha do grau)
                   child: Text(
                     ' ${direction.toStringAsFixed(0)}°',
                     style: const TextStyle(
