@@ -13,6 +13,7 @@ class Room extends StatelessWidget {
   final String roomLon;
   final bool privada;
   final String? senha;
+  final String? roomClue;
 
   const Room({
     super.key,
@@ -21,6 +22,7 @@ class Room extends StatelessWidget {
     required this.roomLat,
     required this.roomLon,
     required this.privada,
+    required this.roomClue,
     this.senha,
   });
 
@@ -32,8 +34,8 @@ class Room extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) {
-        print(roomLon + "   " + roomLat);
         return PasswordPopup(
+          roomClue: roomClue,
           roomLat: double.parse(roomLat),
           roomLon: double.parse(roomLon),
           senha: senha,
@@ -41,21 +43,7 @@ class Room extends StatelessWidget {
           onClose: () {
             Navigator.of(context).pop();
           },
-          onEnter: () {
-            /*debugPrint("Room Lat:" + roomLat);
-            // Aqui você pode tratar a senha futuramente
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder:
-                    (context) => TesteMapPage(
-                      roomLat: double.parse(roomLat),
-                      roomLon: double.parse(roomLon),
-                    ),
-              ),
-            );
-            // Se quiser navegar para a sala após a senha, mova o Navigator.push para cá*/
-          },
+          onEnter: () {},
         );
       },
     );
@@ -65,7 +53,7 @@ class Room extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.only(bottom: 20),
-      color: white,
+      color: background,
       child: ListTileTheme(
         iconColor: green,
         child: ListTile(
@@ -90,6 +78,7 @@ class Room extends StatelessWidget {
                           (context) => TesteMapPage(
                             roomLat: double.parse(roomLat),
                             roomLon: double.parse(roomLon),
+                            roomClue: roomClue,
                           ),
                     ),
                   );

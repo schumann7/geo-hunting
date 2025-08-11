@@ -51,6 +51,7 @@ class GameEnterPage extends StatelessWidget {
                         roomLon: room['longitude'],
                         privada: room['privada'],
                         senha: room['senha'],
+                        roomClue: room['dica'],
                       );
                     },
                   );

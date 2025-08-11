@@ -9,6 +9,7 @@ class PasswordPopup extends StatelessWidget {
   final double? roomLat;
   final double? roomLon;
   final String? senha;
+  final String? roomClue;
 
   const PasswordPopup({
     Key? key,
@@ -17,6 +18,7 @@ class PasswordPopup extends StatelessWidget {
     required this.onClose,
     required this.onEnter,
     required this.controller,
+    required this.roomClue,
     this.senha,
   }) : super(key: key);
 
@@ -61,8 +63,11 @@ class PasswordPopup extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder:
-                      (context) =>
-                          TesteMapPage(roomLat: roomLat, roomLon: roomLon),
+                      (context) => TesteMapPage(
+                        roomLat: roomLat,
+                        roomLon: roomLon,
+                        roomClue: roomClue,
+                      ),
                 ),
               );
             }

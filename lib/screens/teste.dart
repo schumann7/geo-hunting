@@ -24,6 +24,7 @@ class TesteMapPage extends StatefulWidget {
   final String? temperature;
   final double? roomLat;
   final double? roomLon;
+  final String? roomClue;
 
   TesteMapPage({
     this.roomLat,
@@ -33,6 +34,7 @@ class TesteMapPage extends StatefulWidget {
     this.create,
     this.temperature,
     this.getLocation,
+    this.roomClue,
   });
 
   @override
@@ -110,7 +112,7 @@ class _TesteMapPageState extends State<TesteMapPage>
         builder: (context) {
           return PopupCard(
             elevation: 10,
-            color: background,
+            color: white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
             ),
@@ -151,7 +153,7 @@ class _TesteMapPageState extends State<TesteMapPage>
                         );
                       },
                     ),
-                    SizedBox(height: 10),
+                    Spacer(),
                     ElevatedButton(
                       child: Text(
                         "Fechar",
@@ -256,7 +258,7 @@ class _TesteMapPageState extends State<TesteMapPage>
         builder: (context) {
           return PopupCard(
             elevation: 10,
-            color: background,
+            color: white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
             ),
@@ -291,7 +293,7 @@ class _TesteMapPageState extends State<TesteMapPage>
                       "Tesouro encontrado em ${(((stopwatch.elapsedMilliseconds / 1000).round() / 60).floor()).toString().padLeft(2, '0')}:${((stopwatch.elapsedMilliseconds / 1000).round() % 60).toString().padLeft(2, '0')} minutos",
                     ),
 
-                    SizedBox(height: 10),
+                    Spacer(),
                     ElevatedButton(
                       child: Text(
                         "Fechar",
@@ -362,7 +364,73 @@ class _TesteMapPageState extends State<TesteMapPage>
                 ),
                 backgroundColor: background,
                 centerTitle: true,
-                leading: SizedBox(),
+                leading:
+                    widget.roomClue != null && widget.roomClue != ""
+                        ? IconButton(
+                          icon: Icon(Icons.lightbulb_outline),
+                          onPressed: () {
+                            if (widget.roomClue != null &&
+                                widget.roomClue != "") {
+                              showPopupCard(
+                                context: context,
+                                builder: (context) {
+                                  return PopupCard(
+                                    elevation: 10,
+
+                                    color: white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(20),
+
+                                      child: SizedBox(
+                                        width: 220,
+                                        height: 220,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              textAlign: TextAlign.left,
+
+                                              "Dica:",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+
+                                            Text(
+                                              textAlign: TextAlign.center,
+                                              "${widget.roomClue}",
+                                            ),
+                                            SizedBox(height: 10),
+
+                                            Spacer(),
+                                            ElevatedButton(
+                                              child: Text(
+                                                "Fechar",
+                                                style: TextStyle(
+                                                  color: green,
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            }
+                          },
+                        )
+                        : Text(""),
                 actions: [
                   IconButton(
                     onPressed: () {
@@ -400,6 +468,7 @@ class _TesteMapPageState extends State<TesteMapPage>
                   Marker(
                     width: 80,
                     height: 80,
+                    rotate: true,
                     point: _center,
                     child: Icon(
                       widget.create == true
@@ -445,7 +514,6 @@ class _TesteMapPageState extends State<TesteMapPage>
               )
               : SizedBox(),
 
-          //Abaixo daqui o Rômulo fez
           widget.create != true
               ? Positioned(
                 right: 32,
@@ -456,7 +524,7 @@ class _TesteMapPageState extends State<TesteMapPage>
                     setState(() {
                       _center = LatLng(position.latitude, position.longitude);
                     });
-                    _mapController.move(_center, 16.0);
+                    _mapController.move(_center, _mapController.camera.zoom);
                   },
                   backgroundColor: Colors.transparent,
                   elevation: 0,
@@ -470,8 +538,6 @@ class _TesteMapPageState extends State<TesteMapPage>
                 ),
               )
               : SizedBox(),
-
-          //Acima daqui o Rômulo n fez
         ],
       ),
     );
