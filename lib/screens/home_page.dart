@@ -6,6 +6,7 @@ import 'package:geo_hunting/main.dart';
 
 // Pacote para fazer cards popup
 import 'package:flutter_popup_card/flutter_popup_card.dart';
+import 'package:geo_hunting/screens/history_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -18,7 +19,30 @@ class HomePage extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(height: 60),
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HistoryPage(),
+                          ),
+                        );
+                      },
+                      iconSize: 30,
+                      icon: Icon(Icons.history),
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 30),
               const Text(
                 'Seja bem-vindo ao',
                 style: TextStyle(

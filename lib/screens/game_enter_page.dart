@@ -29,7 +29,9 @@ class GameEnterPage extends StatelessWidget {
                   debugPrint("Conexão não estabelecida");
                 case ConnectionState.done:
                   List<Map<String, dynamic>> rooms =
-                      (snapshot.data as List?)?.cast<Map<String, dynamic>>() ??
+                      (snapshot.data as List?)
+                          ?.whereType<Map<String, dynamic>>()
+                          .toList() ??
                       [
                         {
                           "id": "DEMO",
