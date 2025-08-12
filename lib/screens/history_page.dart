@@ -16,17 +16,7 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-  final newRoom = RoomHistory(
-    id: "ID",
-    name: "Teste",
-    distance: "100",
-    time: "10",
-  );
-
   @override
-  /*Future<void> _insertNewRoom() async {
-    await insertRoom(newRoom);
-  }*/
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(backgroundColor: background),
@@ -84,6 +74,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
+                                Text(rooms[index]['date']),
                               ],
                             ),
                           ),

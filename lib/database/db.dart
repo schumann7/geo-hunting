@@ -9,7 +9,7 @@ Future<Database> getDatabase() async {
     version: 1,
     onCreate: (Database db, int version) async {
       await db.execute(
-        "CREATE TABLE rooms(id TEXT PRIMARY KEY, name TEXT, time TEXT, distance TEXT)",
+        "CREATE TABLE rooms(id TEXT PRIMARY KEY, name TEXT, time TEXT, distance TEXT, date TEXT)",
       );
     },
   );

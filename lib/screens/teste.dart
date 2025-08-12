@@ -269,11 +269,14 @@ class _TesteMapPageState extends State<TesteMapPage>
       currentDistance = 0;
       String time =
           "${(((stopwatch.elapsedMilliseconds / 1000).round() / 60).floor()).toString().padLeft(2, '0')}:${((stopwatch.elapsedMilliseconds / 1000).round() % 60).toString().padLeft(2, '0')}";
+      String date =
+          "${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()} ${DateTime.now().hour.toString()}:${DateTime.now().minute.toString()}";
       final newRoom = RoomHistory(
         id: widget.roomId!,
         name: widget.roomName!,
         distance: walkDistance.toString(),
         time: time,
+        date: date,
       );
       _insertNewRoom((newRoom));
 
