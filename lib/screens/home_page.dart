@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geo_hunting/screens/game_enter_page.dart';
 import 'package:geo_hunting/screens/game_create_page.dart';
-
 import 'package:geo_hunting/main.dart';
-
 // Pacote para fazer cards popup
-import 'package:flutter_popup_card/flutter_popup_card.dart';
 import 'package:geo_hunting/screens/history_page.dart';
 
 class HomePage extends StatelessWidget {

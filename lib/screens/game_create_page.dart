@@ -40,14 +40,10 @@ class _GameCreatePageState extends State<GameCreatePage> {
       "dica": _controllerRoomClue.text.trim(),
     };
 
-    print(dados);
-
     // Só adiciona o campo senha se for privada
     if (_isPrivate) {
       dados["senha"] = _controllerRoomPassword.text;
     }
-
-    print("Enviando dados: $dados");
 
     try {
       final resposta = await http.post(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'screens/home_page.dart';
-import 'dart:io';
 
 Color background = Color(0xE5E5E5FF);
 Color green = Color(0xFF185C3C);

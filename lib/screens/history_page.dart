@@ -3,8 +3,6 @@ import 'package:geo_hunting/main.dart';
 
 //db
 import 'package:geo_hunting/dao/salas_dao.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import '../model/salamodel.dart';
 
 void main() {}
 

@@ -1,14 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geo_hunting/main.dart';
-import 'package:geo_hunting/screens/game_enter_page.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
 import '../components/compass.dart';
 import 'dart:core';
-import '../components/game_room.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
 
 // Pacote para fazer cards popup
@@ -19,7 +15,6 @@ import 'package:gif/gif.dart';
 
 //db
 import 'package:geo_hunting/dao/salas_dao.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import '../model/salamodel.dart';
 
 class TesteMapPage extends StatefulWidget {
@@ -250,7 +245,7 @@ class _TesteMapPageState extends State<TesteMapPage>
         //print("Usuário: " + _center.toString());
       });
 
-      await Future.delayed(const Duration(milliseconds: 25));
+      await Future.delayed(const Duration(seconds: 2));
     }
 
     stopwatch.stop();
