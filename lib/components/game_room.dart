@@ -79,6 +79,8 @@ class Room extends StatelessWidget {
                             roomLat: double.parse(roomLat),
                             roomLon: double.parse(roomLon),
                             roomClue: roomClue,
+                            roomName: roomName,
+                            roomId: roomId,
                           ),
                     ),
                   );

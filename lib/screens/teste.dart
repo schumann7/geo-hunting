@@ -17,6 +17,11 @@ import 'package:flutter_popup_card/flutter_popup_card.dart';
 // Pacote para usar gifs
 import 'package:gif/gif.dart';
 
+//db
+import 'package:geo_hunting/dao/salas_dao.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import '../model/salamodel.dart';
+
 class TesteMapPage extends StatefulWidget {
   final void Function(LatLng)? onMapTap;
   final void Function()? getLocation;
@@ -25,6 +30,8 @@ class TesteMapPage extends StatefulWidget {
   final double? roomLat;
   final double? roomLon;
   final String? roomClue;
+  final String? roomName;
+  final String? roomId;
 
   TesteMapPage({
     this.roomLat,
@@ -35,6 +42,8 @@ class TesteMapPage extends StatefulWidget {
     this.temperature,
     this.getLocation,
     this.roomClue,
+    this.roomName,
+    this.roomId,
   });
 
   @override
@@ -50,6 +59,11 @@ class _TesteMapPageState extends State<TesteMapPage>
   String temperature = "Aguarde...";
   double currentDistance = -1;
   Stopwatch stopwatch = Stopwatch();
+
+  //Inserir sala no bd local de partidas
+  Future<void> _insertNewRoom(room) async {
+    await insertRoom(room);
+  }
 
   @override
   void initState() {
@@ -253,6 +267,16 @@ class _TesteMapPageState extends State<TesteMapPage>
     setState(() {
       temperature = "Parabéns!";
       currentDistance = 0;
+      String time =
+          "${(((stopwatch.elapsedMilliseconds / 1000).round() / 60).floor()).toString().padLeft(2, '0')}:${((stopwatch.elapsedMilliseconds / 1000).round() % 60).toString().padLeft(2, '0')}";
+      final newRoom = RoomHistory(
+        id: widget.roomId!,
+        name: widget.roomName!,
+        distance: walkDistance.toString(),
+        time: time,
+      );
+      _insertNewRoom((newRoom));
+
       showPopupCard(
         context: context,
         builder: (context) {

@@ -8,8 +8,8 @@ Future<Database> getDatabase() async {
     caminhoDatabase,
     version: 1,
     onCreate: (Database db, int version) async {
-      db.execute(
-        "CREATE TABLE rooms(id TEXT PRIMARY KEY AUTOINCREMENT, name TEXT, time TEXT, distance TEXT)",
+      await db.execute(
+        "CREATE TABLE rooms(id TEXT PRIMARY KEY, name TEXT, time TEXT, distance TEXT)",
       );
     },
   );

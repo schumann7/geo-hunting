@@ -1,12 +1,12 @@
-class Room {
-  String name;
+class RoomHistory {
   String id;
+  String name;
   String time;
   String distance;
 
-  Room({
-    required this.name,
+  RoomHistory({
     required this.id,
+    required this.name,
     required this.time,
     required this.distance,
   });
