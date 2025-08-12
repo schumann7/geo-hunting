@@ -42,10 +42,24 @@ class GameEnterPage extends StatelessWidget {
                           "senha": "",
                         },
                       ];
+
                   return ListView.builder(
                     itemCount: rooms.length,
                     itemBuilder: (context, index) {
                       final room = rooms[index];
+                      if (snapshot.data == null) {
+                        print(rooms);
+                        return Center(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "Não há salas disponíveis no momento.\nTente novamente mais tarde.",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        );
+                      }
                       return Room(
                         roomName: room['nomedasala'],
                         roomId: room['id'],

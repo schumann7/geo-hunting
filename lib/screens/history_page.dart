@@ -34,11 +34,24 @@ class _HistoryPageState extends State<HistoryPage> {
                 case ConnectionState.none:
                   debugPrint("Conexão não estabelecida");
                 case ConnectionState.done:
-                  List<Map> rooms = snapshot.data!;
+                  List<Map<String, dynamic>> rooms =
+                      (snapshot.data as List<Map<String, dynamic>>)
+                                  .toString()
+                                  .trim() ==
+                              "[]".trim()
+                          ? [{}]
+                          : snapshot.data as List<Map<String, dynamic>>;
 
                   return ListView.builder(
                     itemCount: rooms.length,
                     itemBuilder: (context, index) {
+                      if (snapshot.data.toString().trim() == "[]".trim()) {
+                        return Text(
+                          "Encontre tesouros para poder visualizar o histórico de suas partidas aqui.",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 16),
+                        );
+                      }
                       return Card(
                         margin: EdgeInsets.only(bottom: 20),
                         color: background,

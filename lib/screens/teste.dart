@@ -270,7 +270,7 @@ class _TesteMapPageState extends State<TesteMapPage>
       String time =
           "${(((stopwatch.elapsedMilliseconds / 1000).round() / 60).floor()).toString().padLeft(2, '0')}:${((stopwatch.elapsedMilliseconds / 1000).round() % 60).toString().padLeft(2, '0')}";
       String date =
-          "${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()} ${DateTime.now().hour.toString()}:${DateTime.now().minute.toString()}";
+          "${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()} ${DateTime.now().hour.toString().padLeft(2, '0')}:${DateTime.now().minute.toString().padLeft(2, '0')}";
       final newRoom = RoomHistory(
         id: widget.roomId!,
         name: widget.roomName!,
