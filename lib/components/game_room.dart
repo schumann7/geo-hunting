@@ -1,10 +1,7 @@
-// import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:geo_hunting/main.dart';
-
 import 'package:geo_hunting/components/popup_password.dart';
-import 'package:geo_hunting/screens/teste.dart'; // Adicione este import
+import 'package:geo_hunting/screens/teste.dart';
 
 class Room extends StatelessWidget {
   final String roomName;
@@ -29,7 +26,7 @@ class Room extends StatelessWidget {
   final bool quente = false;
 
   void _showPasswordPopup(BuildContext context) {
-    final TextEditingController _passwordController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
 
     showDialog(
       context: context,
@@ -39,7 +36,7 @@ class Room extends StatelessWidget {
           roomLat: double.parse(roomLat),
           roomLon: double.parse(roomLon),
           senha: senha,
-          controller: _passwordController,
+          controller: passwordController,
           onClose: () {
             Navigator.of(context).pop();
           },
@@ -66,7 +63,7 @@ class Room extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-          leading: Text("ID \n ${roomId}", textAlign: TextAlign.center),
+          leading: Text("ID \n $roomId", textAlign: TextAlign.center),
           trailing: IconButton(
             onPressed: () {
               privada

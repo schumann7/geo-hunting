@@ -32,34 +32,25 @@ class GameEnterPage extends StatelessWidget {
                       (snapshot.data)
                           ?.whereType<Map<String, dynamic>>()
                           .toList() ??
-                      [
-                        {
-                          "id": "DEMO",
-                          "nomedasala": "Sala de Demonstração",
-                          "latitude": "-27.202456",
-                          "longitude": "-52.083215",
-                          "privada": false,
-                          "senha": "",
-                        },
-                      ];
+                      [];
+
+                  if (rooms.isEmpty) {
+                    return Center(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Não há salas disponíveis no momento.\nTente novamente mais tarde.",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    );
+                  }
 
                   return ListView.builder(
                     itemCount: rooms.length,
                     itemBuilder: (context, index) {
                       final room = rooms[index];
-                      if (snapshot.data == null) {
-                        print(rooms);
-                        return Center(
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Não há salas disponíveis no momento.\nTente novamente mais tarde.",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                        );
-                      }
                       return Room(
                         roomName: room['nomedasala'],
                         roomId: room['id'],
@@ -72,7 +63,7 @@ class GameEnterPage extends StatelessWidget {
                     },
                   );
               }
-              return Text("a");
+              return Text("Erro ao carregar as salas.");
             },
           ),
         ),

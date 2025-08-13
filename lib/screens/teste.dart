@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously, depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geo_hunting/main.dart';
@@ -28,7 +30,7 @@ class TesteMapPage extends StatefulWidget {
   final String? roomName;
   final String? roomId;
 
-  TesteMapPage({
+  const TesteMapPage({
     this.roomLat,
     this.roomLon,
     super.key,

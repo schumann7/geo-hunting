@@ -12,13 +12,13 @@ class CompassWidget extends StatelessWidget {
   final double userLongitude;
 
   const CompassWidget({
-    Key? key,
+    super.key,
     this.size = 200,
     required this.treasureLat,
     required this.treasureLon,
     required this.userLatitude,
     required this.userLongitude,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class CompassWidget extends StatelessWidget {
           return const Center(child: Text('Bússola não disponível'));
         }
         return Center(
-          child: Container(
+          child: SizedBox(
             width: size,
             height: size,
             child: Stack(

@@ -1,11 +1,12 @@
+// ignore_for_file: use_build_context_synchronously, deprecated_member_use
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
-import '../main.dart'; // ajuste conforme seu projeto
-import '../screens/teste.dart'; // seu mapa
-// Se green e background estão no main.dart, mantenha este import
+import '../main.dart';
+import '../screens/teste.dart';
 
 // Pacote para fazer cards popup
 import 'package:flutter_popup_card/flutter_popup_card.dart';
@@ -56,8 +57,8 @@ class _GameCreatePageState extends State<GameCreatePage> {
       );
 
       if (resposta.statusCode == 200 || resposta.statusCode == 201) {
-        print("Sala criada com sucesso!");
-        print("Resposta: ${resposta.body}");
+        debugPrint("Sala criada com sucesso!");
+        debugPrint("Resposta: ${resposta.body}");
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(
           context,
@@ -71,15 +72,15 @@ class _GameCreatePageState extends State<GameCreatePage> {
           _hasClue = false;
         });
       } else {
-        print("Erro ao criar sala: ${resposta.statusCode}");
-        print("Mensagem: ${resposta.body}");
+        debugPrint("Erro ao criar sala: ${resposta.statusCode}");
+        debugPrint("Mensagem: ${resposta.body}");
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Erro ao criar sala: ${resposta.body}")),
         );
       }
     } catch (e) {
-      print("Erro de conexão: $e");
+      debugPrint("Erro de conexão: $e");
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Erro de conexão com o servidor.")),

@@ -127,7 +127,7 @@ packages:
     source: hosted
     version: "5.0.0"
   flutter_map:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: flutter_map
       sha256: "87cc8349b8fa5dccda5af50018c7374b6645334a0d680931c1fe11bce88fa5bb"
@@ -151,7 +151,7 @@ packages:
     source: hosted
     version: "2.0.28"
   flutter_polyline_points:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: flutter_polyline_points
       sha256: "3a1c8c30abee9fb0fbe44c70d5d1cedb10ef28ec7ea285c669f02b3e183483aa"
@@ -177,7 +177,7 @@ packages:
     source: sdk
     version: "0.0.0"
   geodesy:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: geodesy
       sha256: e8f843c57e27e562755272a5fe6700c04567d7a6069881d0966ccda71c0f69ad
@@ -185,7 +185,7 @@ packages:
     source: hosted
     version: "0.10.2"
   geolocator:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: geolocator
       sha256: "6cb9fb6e5928b58b9a84bdf85012d757fd07aab8215c5205337021c4999bad27"
@@ -249,7 +249,7 @@ packages:
     source: hosted
     version: "8.1.1"
   google_maps_flutter:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: google_maps_flutter
       sha256: e1805e5a5885bd14a1c407c59229f478af169bf4d04388586b19f53145a5db3a
@@ -337,7 +337,7 @@ packages:
     source: hosted
     version: "3.0.0"
   latlong2:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: latlong2
       sha256: "98227922caf49e6056f91b6c56945ea1c7b166f28ffcd5fb8e72fc0b453cc8fe"

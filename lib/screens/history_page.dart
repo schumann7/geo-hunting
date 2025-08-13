@@ -4,8 +4,6 @@ import 'package:geo_hunting/main.dart';
 //db
 import 'package:geo_hunting/dao/salas_dao.dart';
 
-void main() {}
-
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
 
@@ -44,10 +42,15 @@ class _HistoryPageState extends State<HistoryPage> {
                     itemCount: rooms.length,
                     itemBuilder: (context, index) {
                       if (snapshot.data.toString().trim() == "[]".trim()) {
-                        return Text(
-                          "Encontre tesouros para poder visualizar o histórico de suas partidas aqui.",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16),
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 300),
+                          child: Center(
+                            child: Text(
+                              "Encontre tesouros para poder visualizar o histórico de suas partidas aqui.",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
                         );
                       }
                       return Card(
