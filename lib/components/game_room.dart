@@ -32,6 +32,8 @@ class Room extends StatelessWidget {
       context: context,
       builder: (context) {
         return PasswordPopup(
+          roomId: roomId,
+          roomName: roomName,
           roomClue: roomClue,
           roomLat: double.parse(roomLat),
           roomLon: double.parse(roomLon),

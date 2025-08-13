@@ -10,6 +10,8 @@ class PasswordPopup extends StatelessWidget {
   final double? roomLon;
   final String? senha;
   final String? roomClue;
+  final String roomName;
+  final String roomId;
 
   const PasswordPopup({
     super.key,
@@ -19,6 +21,8 @@ class PasswordPopup extends StatelessWidget {
     required this.onEnter,
     required this.controller,
     required this.roomClue,
+    required this.roomName,
+    required this.roomId,
     this.senha,
   });
 
@@ -67,6 +71,8 @@ class PasswordPopup extends StatelessWidget {
                         roomLat: roomLat,
                         roomLon: roomLon,
                         roomClue: roomClue,
+                        roomName: roomName,
+                        roomId: roomId,
                       ),
                 ),
               );
