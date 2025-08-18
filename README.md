@@ -1,14 +1,131 @@
-# Geo Hunting
-GeoHunting é um APP inovador que busca trazer a tecnologia aliada à diversão de brincadeiras de caça ao tesouro! Neste APP, você deve ir atrás de um tesouro cadastrado previamente por um amigo, podendo ser jogado sozinho ou em grupos. Esse é o aplicativo ideal para um dia com os amigos.
-# Como rodar?
-Para rodar Geo Hunting em seu computador você deve ter o Flutter na versão correta e instalar todas as bibliotecas necessárias para o seu funcionamento. Após isso, acesse o arquivo _main.dart_ na pasta _lib_ e selecione um dispositivo móvel que tenha acesso ao _GPS_, depois disso você será redireconado à página principal onde terá a opção de criar ou se juntar a uma sala. Para criar uma sala você deve informar o nome dela, decidir a localização do tesouro e se quer ou não incluir uma senha. Depois de ter uma nova sala criada, convide outros usuários para entrar na sessão e procurar o prêmio.
-# Widgets do projeto
-## FlutterMap
-Esse widget é proveniente da biblioteca Flutter_Map e é utlizado para produzir o mapa base do Geo Hunting. Esse widget dispõe de certos parâmetros que facilitam sua configuração, como o _center_ que centraliza certa coordenada no centro da tela, o _zoom_ que define a quantidade de zoom que vamos ter no mapa, o _OnTap_ que define o que acontecerá quando o usuário clicar no mapa e por fim o _OnMapReady_ que dita a ação que deve ser feita quando o mapa for inicializado. No parâmetro _children_ temos o _TileLayer_ que disponibiliza o mapa em forma de grade, ainda no _children_ temos o _MarkerLayer_ que define onde ficarão um ou mais "Pins" no mapa. Esse widget está no arquivo teste.dart.
-## PopupCard
-Esse widget é o responsável pelo _PopUps_ de nosso aplicativa. Usamos ele em duas ocasiões: primeiramente quando o usuário acessa uma sala,  um _PopUp_ surge para lembrá-lo de fazer a calibração da bússola para o seu correto funcionamento durante a jogatina. Em segundo momento, ele é utilizado para anunciar o final da partida e a chegada ao destino, nessa oportunidade o _PopUp_ mostra para o usuário a confirmação do êxito e dados como o tempo de procura e a distância por ele percorrida. Esse widget conta com alguns parâmetros como _color_, _shape_, _elevation_ e _child_.
-## CompassWidget
-Esse widget é o responsável por criar a bússola que aparece para o jogador na tela de procura ao tesouro. Enquanto o usuário está na busca pelo prêmio, a bússola aparece no canto inferior esquerdo da tela e indica para qual direção a busca deve se desenvolver, tornando assim o jogo mais amigável e divertido. Esse widget recebe a longitude e latitude tanto do usuário, quanto do tesouro para fazer o cálculo e apontar a direção correta. Os graus são obtido a partir de cálculos matemáticos, baseados nas posições fornecidas anteriormente, e são exibidos no meio da bússola em conjunto com um ponteiro que aponta para a direção do tesouro.
+# Documentação do Aplicativo Geo Hunting
 
-# Possíveis melhorias
-Para projetos futuros algumas melhorias podem ser discutidas, como a implementação de um novo modo _Multiplayer_ para que vários jogadores procurem o mesmo tesouro ao mesmo tempo. O modo Pega-pega também poderia ser incluído, com 2 times diferentes: caçadores e fugitivos. A implementação de uma função de criação de conta no app que poderia ser usado, entre outras coisas, para a possibilidade dos usuários de apagarem suas próprias salas do jogo.
+## Introdução
+
+O **Geo Hunting** é um aplicativo móvel inovador desenvolvido em Flutter, que combina tecnologia de geolocalização (GPS) com a diversão clássica de jogos de caça ao tesouro. O objetivo principal é permitir que usuários busquem "tesouros" cadastrados previamente por amigos ou outros jogadores, podendo ser jogado individualmente ou em grupos. Ideal para atividades sociais e recreativas, o app transforma o mundo real em um campo de jogo interativo.
+
+Este projeto foi criado como parte da disciplina de **DSDM (Desenvolvimento de Sistemas Distribuídos e Móveis)**, focando no uso de GPS para criar experiências imersivas. O repositório está disponível no GitHub: [https://github.com/schumann7/geo-hunting](https://github.com/schumann7/geo-hunting).
+
+## Funcionalidades Principais
+
+- **Criação e Junção de Salas**: Usuários podem criar salas de jogo informando o nome, localização do tesouro e uma senha opcional. Outros jogadores podem se juntar à sala para participar da caça.
+- **Mapa Interativo**: Exibição de um mapa com marcadores (pins) para indicar posições relevantes, como a localização do tesouro.
+- **Bússola Integrada**: Durante a busca, uma bússola no canto inferior esquerdo da tela guia o jogador na direção correta, calculando ângulos baseados em coordenadas GPS.
+- **Pop-ups Informativos**: Notificações para calibração da bússola ao entrar em uma sala e anúncio de vitória ao alcançar o tesouro, incluindo estatísticas como tempo gasto e distância percorrida.
+- **Suporte a GPS**: Requer dispositivos móveis com acesso a GPS para rastreamento em tempo real.
+- **Modo de Jogo Básico**: Focado em caça ao tesouro solo ou em grupo, com potencial para expansões futuras.
+
+## Requisitos
+
+### Hardware
+- Dispositivo móvel (Android ou iOS) com suporte a GPS e bússola.
+- Conexão à internet para carregar mapas (via TileLayer).
+
+### Software
+- **Flutter**: Versão compatível (recomenda-se a mais recente estável, como 3.29.0 ou superior). Certifique-se de que o ambiente Flutter esteja configurado corretamente.
+- **Bibliotecas Necessárias**:
+  - `flutter_map`: Para renderização de mapas.
+  - Outras bibliotecas: `geolocator` para GPS, `latlong` para obter e manipular coordenadas de latitude e longitude, `flutter_compass` para bússola e `sqflite` para o banco de dados local (responsável pelo histórico).
+  - Instale todas as dependências listadas no `pubspec.yaml` rodando o comando `flutter pub get` no terminal.
+
+### Ambiente de Desenvolvimento
+- Flutter SDK instalado.
+- Android Studio ou Xcode para emuladores/dispositivos reais.
+- Acesso a um emulador ou dispositivo físico com GPS ativado.
+
+## Instalação
+
+1. **Clone o Repositório**:
+   ```bash
+   git clone https://github.com/schumann7/geo-hunting.git
+   cd geo-hunting
+   ```
+
+2. **Instale Dependências**:
+   Execute o comando para baixar as bibliotecas necessárias:
+   ```bash
+   flutter pub get
+   ```
+
+3. **Configure o Ambiente**:
+   - Certifique-se de que o Flutter está na PATH do sistema.
+   - Para Android: Configure o `android/build.gradle` e `android/app/build.gradle` se necessário.
+   - Para iOS: Atualize o `Podfile` e execute `pod install` na pasta `ios/`.
+
+4. **Permissões**:
+   - No arquivo `AndroidManifest.xml` (para Android): Adicione permissões para localização (`ACCESS_FINE_LOCATION`, `ACCESS_COARSE_LOCATION`).
+   - No `Info.plist` (para iOS): Adicione chaves para localização (`NSLocationWhenInUseUsageDescription`).
+
+## Como Executar
+
+1. Abra o projeto em um editor como VS Code ou Android Studio.
+2. Navegue até o arquivo `lib/main.dart`.
+3. Selecione um dispositivo móvel (emulador ou físico) com GPS ativado.
+4. Execute o app com:
+   ```bash
+   flutter run
+   ```
+5. Na tela principal:
+   - **Criar Sala**: Informe o nome da sala, defina a localização do tesouro (via toque no mapa) e opte por uma senha.
+   - **Juntar-se a uma Sala**: Insira o nome da sala e senha (se aplicável) para participar.
+6. Convide amigos para entrar na sessão e iniciar a caça ao tesouro.
+
+**Notas**:
+- Ao entrar em uma sala, um pop-up solicitará a calibração da bússola.
+- Durante o jogo, use a bússola para orientação e o mapa para navegação.
+- Ao alcançar o tesouro, um pop-up exibirá o tempo de busca e distância percorrida.
+
+## Widgets Principais
+
+### FlutterMap
+- **Biblioteca**: `flutter_map`.
+- **Uso**: Renderiza o mapa base do jogo.
+- **Parâmetros Principais**:
+  - `center`: Centraliza o mapa em coordenadas específicas.
+  - `zoom`: Define o nível de zoom inicial.
+  - `onTap`: Ação ao clicar no mapa (ex: definir localização do tesouro).
+  - `onMapReady`: Ação ao inicializar o mapa.
+- **Children**:
+  - `TileLayer`: Carrega tiles de mapa (ex: de OpenStreetMap).
+  - `MarkerLayer`: Adiciona marcadores (pins) para tesouros ou posições de jogadores.
+- **Localização**: `teste.dart`.
+
+### PopupCard
+- **Uso**: Gerencia pop-ups no app.
+- **Ocasiões**:
+  - Lembrete de calibração da bússola ao entrar em uma sala.
+  - Anúncio de fim de jogo, com confirmação de sucesso, tempo e distância.
+- **Parâmetros**:
+  - `color`: Cor de fundo.
+  - `shape`: Formato do card.
+  - `elevation`: Sombra/elevação.
+  - `child`: Conteúdo interno (texto, botões).
+
+### CompassWidget
+- **Uso**: Exibe uma bússola durante a caça ao tesouro (canto inferior esquerdo).
+- **Funcionamento**: Recebe latitude/longitude do usuário e do tesouro, calcula direção via fórmulas matemáticas (ex: atan2 para ângulos).
+- **Exibição**: Graus no centro + ponteiro apontando para o tesouro.
+
+## Uso Avançado
+
+- **Criação de Tesouro**: Toque no mapa para selecionar coordenadas.
+- **Multiplayer Básico**: Compartilhe o nome da sala para que outros entrem (não há modo competitivo simultâneo ainda).
+- **Debugging**: Use `flutter doctor` para verificar o ambiente. Monitore logs para erros de GPS.
+
+## Possíveis Melhorias e Trabalho Futuro
+
+- **Modo Multiplayer Avançado**: Permitir que múltiplos jogadores busquem o mesmo tesouro simultaneamente, com leaderboard em tempo real.
+- **Modo Pega-Pega**: Dividir em times (caçadores vs. fugitivos), usando GPS para rastreamento dinâmico.
+- **Sistema de Contas**: Implementar login/cadastro para gerenciar salas (ex: deletar salas próprias) e perfis de usuários.
+- **Outras Ideias**:
+  - Integração com AR (Realidade Aumentada) para visualização do tesouro.
+  - Suporte offline com mapas cached.
+  - Notificações push para atualizações de jogo.
+  - Expansão para web/desktop via Flutter multi-plataforma.
+
+## Créditos
+
+- [Álvaro Schenatto](https://github.com/aaschenatto)
+- [Gabriel Schumann](https://github.com/schumann7)
+- [Rômulo Horn](https://github.com/Romulooo)
+- [João Peruzzo](https://github.com/SoJoaomesmo)
