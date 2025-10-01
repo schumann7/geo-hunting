@@ -4,7 +4,7 @@
 
 O **Geo Hunting** é um aplicativo móvel inovador desenvolvido em Flutter, que combina tecnologia de geolocalização (GPS) com a diversão clássica de jogos de caça ao tesouro. O objetivo principal é permitir que usuários busquem "tesouros" cadastrados previamente por amigos ou outros jogadores, podendo ser jogado individualmente ou em grupos. Ideal para atividades sociais e recreativas, o app transforma o mundo real em um campo de jogo interativo.
 
-Este projeto foi criado como parte da disciplina de **DSDM (Desenvolvimento de Sistemas Distribuídos e Móveis)**, focando no uso de GPS para criar experiências imersivas. O repositório está disponível no GitHub: [https://github.com/schumann7/geo-hunting](https://github.com/schumann7/geo-hunting).
+Este projeto foi criado como parte da disciplina de **Desenvolvimento para Dispositivos Móveis**, focando no uso de GPS para criar experiências imersivas.
 
 ## Funcionalidades Principais
 
@@ -122,6 +122,8 @@ Este projeto foi criado como parte da disciplina de **DSDM (Desenvolvimento de S
   - Suporte offline com mapas cached.
   - Notificações push para atualizações de jogo.
   - Expansão para web/desktop via Flutter multi-plataforma.
+
+**Aproveite também para ver a nossa apresentação e demonstração prática do aplicativo no [YouTube](https://www.youtube.com/watch?v=8_Zosio2K7Y)**
 
 ## Créditos
 
